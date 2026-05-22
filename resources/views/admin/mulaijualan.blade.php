@@ -1,303 +1,232 @@
-{{-- resources/views/admin/mulaijualan.blade.php --}}
+<!DOCTYPE html>
+<html lang="id">
 
-@extends('layouts.app')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulai Jualan - FLOMART</title>
 
-@section('title', 'Mulai Jualan')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-@section('content')
+<body class="bg-gray-100 font-sans">
 
-<div class="bg-gray-100 font-sans min-h-screen">
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow z-50">
 
-    <!-- HEADER -->
-    <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow z-50">
+    <!-- TOP -->
+    <div class="flex items-center justify-between px-10 py-4">
 
-        <div class="flex items-center justify-between px-10 py-4">
+        <!-- LOGO -->
+        <img src="{{ asset('assets/img/LogoFlomart.png') }}" width="150">
 
-            <!-- LOGO -->
-            <img src="{{ asset('assets/img/LogoFlomart.png') }}" width="150">
+        <div class="flex items-center gap-8">
 
-            <div class="flex items-center gap-8">
+            <!-- MENU -->
+            <nav class="flex items-center gap-6 text-gray-700 font-medium text-sm">
 
-                <!-- MENU -->
-                <nav class="flex items-center gap-6 text-gray-700 font-medium text-sm">
-
-                    <a href="#" class="hover:text-green-600">
+                {{-- CHAT --}}
+                @guest
+                    <a href="{{ route('login') }}"
+                       class="hover:text-green-600">
                         Chat
                     </a>
+                @else
+                    <a href="/chat"
+                       class="hover:text-green-600">
+                        Chat
+                    </a>
+                @endguest
 
-                    <a href="#" class="hover:text-green-600">
+                {{-- PESANAN --}}
+                @guest
+                    <a href="{{ route('login') }}"
+                       class="hover:text-green-600">
                         Pesanan
                     </a>
+                @else
+                    <a href="/pesanan"
+                       class="hover:text-green-600">
+                        Pesanan
+                    </a>
+                @endguest
 
-                    <a href="#" class="hover:text-green-600">
+                {{-- NOTIFIKASI --}}
+                @guest
+                    <a href="{{ route('login') }}"
+                       class="hover:text-green-600">
                         Notifikasi
                     </a>
-
-                    <!-- ICON PROFILE -->
-                    <div class="w-6 h-6 rounded-full border-2 border-green-500 flex items-center justify-center text-green-600 text-xs">
-                        {{ strtoupper(substr($nama, 0, 1)) }}
-                    </div>
-
-                </nav>
-
-                <!-- LOGIN / LOGOUT -->
-                @if($isLogin)
-
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-
-                        <button type="submit"
-                            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
-                            Logout
-                        </button>
-                    </form>
-
                 @else
-
-                    <a href="{{ route('login') }}"
-                       class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-                        Login
+                    <a href="/notifikasi"
+                       class="hover:text-green-600">
+                        Notifikasi
                     </a>
+                @endguest
 
-                @endif
+                <!-- AVATAR -->
+                <div class="w-6 h-6 rounded-full border-2 border-green-500
+                flex items-center justify-center text-green-600 text-xs">
 
-            </div>
+                    {{ strtoupper(substr($nama, 0, 1)) }}
+
+                </div>
+
+            </nav>
+
+            <!-- LOGIN / LOGOUT -->
+            @guest
+
+                <a href="{{ route('login') }}"
+                   class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+
+                    Login
+
+                </a>
+
+            @else
+
+                <form action="{{ route('logout') }}" method="POST">
+
+                    @csrf
+
+                    <button
+                        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+
+                        Logout
+
+                    </button>
+
+                </form>
+
+            @endguest
 
         </div>
-
-        <!-- NAVBAR -->
-        <nav class="border-t px-10 py-3 flex justify-center gap-10 text-gray-500 font-medium">
-
-            <a href="/dashboard" class="hover:text-green-600">
-                Beranda
-            </a>
-
-            <a href="/mulaijualan"
-               class="text-green-600 border-b-2 border-green-600 pb-1">
-                Mulai Jualan
-            </a>
-
-            <a href="/tentang-kami" class="hover:text-green-600">
-                Tentang Kami
-            </a>
-
-        </nav>
-
-    </header>
-
-    <!-- CONTENT -->
-    <div class="pt-32 px-10 max-w-7xl mx-auto">
-
-        <!-- WELCOME -->
-        <section class="mb-6 mt-10">
-
-            <h1 class="text-4xl font-bold">
-                Selamat datang, {{ $nama }}!
-            </h1>
-
-        </section>
-
-        <!-- BANNER -->
-        <section class="mb-20">
-
-            <div class="relative rounded-2xl px-10 py-12 flex items-center justify-between bg-cover bg-center overflow-hidden"
-                 style="background-image: url({{ asset('assets/img/BannerBg.png') }});">
-                <!-- TEXT -->
-                <div class="max-w-xl">
-
-                    <h1 class="text-4xl font-bold mb-6">
-                        Kelola Toko <br>
-                        dan Mulai Jualan <br>
-                        dengan Mudah
-                    </h1>
-
-                    <p class="text-gray-500 mb-8 text-lg">
-                        Masuk sebagai admin untuk menambahkan produk,
-                        mengatur stok, memantau pesanan,
-                        dan mengelola penjualan toko Anda di FLOMART.
-                    </p>
-
-                    <!-- BUTTON -->
-                    @if(!$isLogin)
-
-                        <a href="{{ $loginUrl }}"
-                           class="inline-block bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 font-semibold shadow-md transition">
-                            Login
-                        </a>
-
-                    @elseif($role === 'pembeli')
-
-                        <a href="{{ $loginUrl }}"
-                           class="inline-block bg-yellow-400 text-black px-6 py-3 rounded-xl hover:bg-yellow-500 font-semibold shadow-md transition">
-                            Login sebagai Admin
-                        </a>
-
-                        <p class="text-sm text-gray-600 mt-3">
-                            Anda sedang login sebagai pembeli.
-                            Silakan login dengan akun admin
-                            untuk mengakses dashboard admin.
-                        </p>
-
-                    @endif
-
-                </div>
-
-                <!-- IMAGE -->
-                <div class="relative">
-
-                    <img src="{{ asset('assets/img/FotoJualan.png') }}"
-                         width="300">
-
-                </div>
-
-            </div>
-
-        </section>
 
     </div>
 
-    <!-- FOOTER -->
-    <footer class="w-full bg-green-700 text-white py-14 mt-10">
+    <!-- NAVBAR -->
+    <nav class="border-t px-10 py-3 flex justify-center gap-10 text-gray-500 font-medium">
 
-        <div class="max-w-7xl mx-auto px-10">
+        <a href="/"
+           class="hover:text-green-600">
 
-            <div class="grid grid-cols-4 gap-10">
+            Beranda
 
-                <!-- BRAND -->
-                <div>
+        </a>
 
-                    <img src="{{ asset('assets/img/contrasLogoFlomart.png') }}"
-                         width="150">
+        <a href="{{ route('mulaijualan') }}"
+           class="text-green-600 border-b-2 border-green-600 pb-1">
 
-                    <p class="text-sm mb-4">
-                        Marketplace tanaman ramah lingkungan terpercaya
+            Mulai Jualan
+
+        </a>
+
+        <a href="#"
+           class="hover:text-green-600">
+
+            Tentang Kami
+
+        </a>
+
+    </nav>
+
+</header>
+
+<!-- CONTENT -->
+<div class="pt-32 px-10 max-w-7xl mx-auto">
+
+    <!-- GREETING -->
+    <section class="mb-6 mt-10">
+
+        <h1 class="text-4xl font-bold">
+
+            Selamat datang,
+            {{ $nama }}!
+
+        </h1>
+
+    </section>
+
+    <!-- BANNER -->
+    <section class="mb-20">
+
+        <div class="relative rounded-2xl overflow-hidden">
+
+    <!-- BACKGROUND -->
+    <img
+        src="{{ asset('assets/img/BannerBg.png') }}"
+        class="absolute inset-0 w-full h-full object-cover -z-10">
+
+    <!-- CONTENT -->
+    <div class="px-10 py-12 flex items-center justify-between">
+
+        <!-- TEXT -->
+        <div class="max-w-xl">
+
+            <h1 class="text-4xl font-bold mb-6 leading-tight">
+
+                Kelola Toko <br>
+                dan Mulai Jualan <br>
+                dengan Mudah
+
+            </h1>
+
+            <p class="text-gray-500 mb-8 text-lg leading-8">
+
+                Masuk sebagai admin untuk menambahkan produk,
+                mengatur stok, memantau pesanan,
+                dan mengelola penjualan toko Anda di FLOMART.
+
+            </p>
+
+            {{-- GUEST --}}
+            @guest
+
+                <a href="{{ route('login') }}"
+                   class="inline-block bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 font-semibold shadow-md transition">
+
+                    Login
+
+                </a>
+
+            @else
+
+                {{-- PEMBELI --}}
+                @if($role === 'pembeli')
+
+                    <a href="{{ route('login') }}"
+                       class="inline-block bg-yellow-400 text-black px-6 py-3 rounded-xl hover:bg-yellow-500 font-semibold shadow-md transition">
+
+                        Login sebagai Admin
+
+                    </a>
+
+                    <p class="text-sm text-gray-600 mt-3">
+
+                        Anda sedang login sebagai pembeli.
+                        Silakan login dengan akun admin
+                        untuk mengakses dashboard admin.
+
                     </p>
 
-                    <div class="flex">
+                @endif
 
-                        <input type="email"
-                               placeholder="Write Email"
-                               class="px-3 py-2 rounded-l-lg text-black w-full bg-white">
-
-                        <button class="bg-yellow-400 px-4 rounded-r-lg">
-                            ➤
-                        </button>
-
-                    </div>
-
-                    <p class="text-xs mt-6">
-                        Copyright <br>
-                        © 2025 FLOMART. All rights reserved. <br>
-                        Grow green, live better.
-                    </p>
-
-                </div>
-
-                <!-- LAYANAN -->
-                <div>
-
-                    <h3 class="font-semibold mb-4">
-                        Layanan
-                    </h3>
-
-                    <ul class="space-y-2 text-sm">
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Belanja Tanaman
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Bibit & Media Tanaman
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Filter Kecocokan Tanaman
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Start Sell (jual tanaman)
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-                <!-- BANTUAN -->
-                <div>
-
-                    <h3 class="font-semibold mb-4">
-                        Bantuan
-                    </h3>
-
-                    <ul class="space-y-2 text-sm">
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Cara Belanja
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Cara Menjual Tanaman
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Pengiriman & Perawatan
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="hover:underline">
-                                Kebijakan Pengembalian
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-                <!-- SOSIAL -->
-                <div>
-
-                    <h3 class="font-semibold mb-4">
-                        Ikuti Kami
-                    </h3>
-
-                    <ul class="space-y-2 text-sm">
-
-                        <li>
-                            Instagram - @flomart.id
-                        </li>
-
-                        <li>
-                            Facebook - FLOMART
-                        </li>
-
-                        <li>
-                            Twitter/X - @flomart_id
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </div>
+            @endguest
 
         </div>
 
-    </footer>
+        <!-- IMAGE -->
+        <img
+            src="{{ asset('assets/img/FotoJualan.png') }}"
+            class="w-[320px]">
+
+    </div>
 
 </div>
 
-@endsection
+</div>
+<x-footer />
+
+</body>
+</html>

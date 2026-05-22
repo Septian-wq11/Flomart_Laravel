@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -45,35 +44,43 @@ class AuthController extends Controller
             ->with('success', 'Registrasi berhasil');
     }
 
-    // ================= PROSES LOGIN =================
     public function loginPost(Request $request)
-    {
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
+{
+    $request->validate([
+        'email' => 'required',
+        'password' => 'required',
+    ]);
 
-        if (Auth::attempt($credentials, $request->remember)) {
+    $user = User::where('email', $request->email)->first();
 
-            $request->session()->regenerate();
+    // cek user dan password plaintext
+    if ($user && $request->password == $user->password) {
 
-            $user = Auth::user();
+        Auth::login($user);
 
-            // redirect role
-            if ($user->role == 'admin') {
-                return redirect('/admin/dashboard');
-            }
+        $request->session()->regenerate();
 
-            if ($user->role == 'owner') {
-                return redirect('/owner/dashboard');
-            }
+        // redirect berdasarkan role
+        if ($user->role == 'admin') {
+
+            return redirect('/admin/dashboard');
+
+        } elseif ($user->role == 'owner') {
+
+            return redirect('/owner/dashboard');
+
+        } else {
 
             return redirect('/');
+
         }
 
-        return back()->with('error', 'Email atau password salah');
     }
 
+    return back()->withErrors([
+        'email' => 'Email atau password salah',
+    ]);
+}
     // ================= LOGOUT =================
     public function logout(Request $request)
     {

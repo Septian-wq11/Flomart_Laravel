@@ -2,35 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class mulaijualanController extends Controller
 {
     public function mulaijualan()
     {
-        // cek login
-        $isLogin = Session::has('id_user');
+        $isLogin = Auth::check();
 
-        // ambil data session
-        $role = Session::get('role', 'guest');
-        $nama = Session::get('nama', 'Guest');
+        $user = Auth::user();
 
-        // jika admin langsung dashboard
+        $role = $user->role ?? 'guest';
+
+        $nama = $user->nama ?? 'Guest';
+
+        // admin langsung dashboard
         if ($isLogin && $role === 'admin') {
             return redirect('/admin/dashboard');
         }
 
-        // url login admin
-        $redirect = urlencode('/admin/dashboard');
-        $loginUrl = "/login?admin=1&redirect=" . $redirect;
-
-        // kirim ke blade
         return view('admin.mulaijualan', compact(
             'isLogin',
             'role',
-            'nama',
-            'loginUrl'
+            'nama'
         ));
     }
 }

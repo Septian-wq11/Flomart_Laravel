@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard FLOMART</title>
+    <title>FLOMART</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -11,13 +12,14 @@
 <body class="bg-gray-100 font-sans scroll-smooth">
 
 <!-- HEADER -->
-<header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow z-50">
+<header class="fixed top-0 left-0 w-full bg-white shadow z-50">
 
     <!-- TOP BAR -->
     <div class="flex items-center justify-between px-10 py-4">
 
         <!-- LOGO -->
-        <img src="{{ asset('assets/img/LogoFlomart.png') }}" width="150">
+        <img src="{{ asset('assets/img/LogoFlomart.png') }}"
+             width="160">
 
         <div class="flex items-center gap-8">
 
@@ -63,21 +65,8 @@
                     </a>
                 @endguest
 
-                {{-- KERANJANG --}}
-                @guest
-                    <a href="{{ route('login') }}"
-                       class="hover:text-green-600">
-                        Keranjang
-                    </a>
-                @else
-                    <a href="/keranjang"
-                       class="hover:text-green-600">
-                        Keranjang
-                    </a>
-                @endguest
-
-                <!-- AVATAR -->
-                <div class="w-6 h-6 rounded-full border-2 border-green-500
+                {{-- AVATAR --}}
+                <div class="w-8 h-8 rounded-full border-2 border-green-500
                 flex items-center justify-center text-green-600 text-xs">
 
                     {{ strtoupper(substr(Auth::user()->nama ?? 'G', 0, 1)) }}
@@ -90,7 +79,7 @@
             @guest
 
                 <a href="{{ route('login') }}"
-                   class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                   class="bg-green-600 text-white px-5 py-2 rounded-xl hover:bg-green-700 transition">
 
                     Login
 
@@ -103,7 +92,7 @@
                     @csrf
 
                     <button
-                        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                        class="bg-red-500 text-white px-5 py-2 rounded-xl hover:bg-red-600 transition">
 
                         Logout
 
@@ -118,10 +107,11 @@
     </div>
 
     <!-- NAVBAR -->
-    <div class="px-10">
+    <div class="px-10 border-t border-gray-200">
 
-        <nav class="border-t-2 border-gray-200 py-3 flex justify-center gap-10 text-gray-700 font-medium">
+        <nav class="flex justify-center gap-12 py-4 font-medium text-gray-700">
 
+            <!-- BERANDA -->
             <a href="/"
                class="text-green-600 border-b-2 border-green-600 pb-1">
 
@@ -129,12 +119,20 @@
 
             </a>
 
-           <a href="{{ route('admin.mulaijualan') }}">
-            Mulai Jualan
+            <!-- MULAI JUALAN -->
+            <a href="{{ route('mulaijualan') }}"
+               class="hover:text-green-600">
+
+                Mulai Jualan
+
             </a>
 
-            <a href="#">
+            <!-- TENTANG -->
+            <a href="#"
+               class="hover:text-green-600">
+
                 Tentang Kami
+
             </a>
 
         </nav>
@@ -144,10 +142,10 @@
 </header>
 
 <!-- CONTENT -->
-<div class="pt-32 px-10 max-w-7xl mx-auto">
+<div class="pt-36 px-10 max-w-7xl mx-auto">
 
     <!-- GREETING -->
-    <section class="mb-6 mt-10">
+    <section class="mb-6">
 
         <h1 class="text-4xl font-bold">
 
@@ -159,15 +157,22 @@
     </section>
 
     <!-- BANNER -->
-    <section class="mb-12">
+<section class="mb-12">
 
-        <div class="rounded-2xl px-10 py-12 flex items-center justify-between
-        bg-cover bg-center"
-        style="background-image: url('{{('public/assets/img/BannerBg.png') }}');">
+    <div class="relative rounded-2xl overflow-hidden">
 
+        <!-- BACKGROUND -->
+        <img
+            src="{{ asset('assets/img/BannerBg.png') }}"
+            class="absolute inset-0 w-full h-full object-cover -z-10">
+
+        <!-- CONTENT -->
+        <div class="px-10 py-12 flex items-center justify-between">
+
+            <!-- TEXT -->
             <div class="max-w-xl">
 
-                <h1 class="text-4xl font-bold mb-6">
+                <h1 class="text-4xl font-bold mb-6 leading-tight">
 
                     Belanja Pintar <br>
                     untuk Masa Depan <br>
@@ -175,7 +180,7 @@
 
                 </h1>
 
-                <p class="text-gray-500 mb-6">
+                <p class="text-gray-500 mb-6 text-[15px] leading-7">
 
                     Temukan produk tanaman ramah lingkungan
                     dari penjual terpercaya dengan proses
@@ -185,50 +190,58 @@
 
             </div>
 
-            <img src="{{ asset('assets/img/FotoLogin.png') }}"
-                 width="300">
+            <!-- IMAGE -->
+            <img
+                src="{{ asset('assets/img/FotoLogin.png') }}"
+                width="300">
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
     <!-- REKOMENDASI -->
-    <section class="mb-12">
+    <section class="mb-14">
 
-        <h2 class="text-2xl font-bold mb-2">
+        <h2 class="text-3xl font-bold mb-2">
+
             Rekomendasi Benih Berkualitas
+
         </h2>
 
-        <p class="text-gray-500 mb-6">
-            Produk rekomendasi terbaik FLOMART.
+        <p class="text-gray-500 mb-8">
+
+            Produk rekomendasi berdasarkan jumlah penjualan terbanyak.
+
         </p>
 
         <div class="grid grid-cols-4 gap-6">
 
             @foreach($rekomendasi as $item)
 
-                <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition">
+                <div class="bg-white rounded-2xl shadow-md p-4 hover:shadow-xl transition">
 
-                    <div class="mb-4">
+                    <!-- IMAGE -->
+                    <img src="{{ asset('uploads/produk/' . $item->gambar) }}"
+                         class="w-full h-48 object-cover rounded-xl mb-4">
 
-                        <img src="{{ asset('uploads/produk/' . $item->gambar) }}"
-                             class="w-full h-40 object-cover rounded-lg">
-
-                    </div>
-
-                    <p class="text-xs text-gray-400">
+                    <!-- KATEGORI -->
+                    <p class="text-sm text-gray-400">
 
                         {{ $item->kategori->nama_kategori ?? '-' }}
 
                     </p>
 
-                    <h3 class="font-semibold text-lg">
+                    <!-- NAMA -->
+                    <h3 class="font-semibold text-lg mb-2">
 
                         {{ $item->nama_produk }}
 
                     </h3>
 
-                    <p class="text-green-600 font-bold">
+                    <!-- HARGA -->
+                    <p class="text-green-600 font-bold text-lg">
 
                         Rp {{ number_format($item->harga, 0, ',', '.') }}
 
@@ -245,25 +258,29 @@
     <!-- KATEGORI -->
     <section class="mb-10">
 
-        <h2 class="text-2xl font-bold mb-2">
+        <h2 class="text-3xl font-bold mb-2">
+
             Pilihan Benih Terbaik
+
         </h2>
 
-        <p class="text-gray-500 mb-4">
+        <p class="text-gray-500 mb-6">
+
             Pilih produk berdasarkan kategori.
+
         </p>
 
-        <div class="flex gap-3 flex-wrap">
+        <div class="flex gap-4 flex-wrap">
 
             @foreach($kategori as $item)
 
-                <button
-                    class="px-4 py-2 rounded-full text-sm transition border
-                    bg-white border-gray-200 hover:bg-green-100 hover:text-green-700">
+                <a href="/?kategori={{ $item->id_kategori }}"
+                   class="px-5 py-2 rounded-full bg-white border
+                   hover:bg-green-100 hover:text-green-700 transition">
 
                     {{ $item->nama_kategori }}
 
-                </button>
+                </a>
 
             @endforeach
 
@@ -278,52 +295,53 @@
 
             @foreach($produk as $item)
 
-                <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition">
+                <div class="bg-white rounded-2xl shadow-md p-4 hover:shadow-xl transition">
 
-                    <div class="mb-4">
+                    <!-- IMAGE -->
+                    <img src="{{ asset('uploads/produk/' . $item->gambar) }}"
+                         class="w-full h-48 object-cover rounded-xl mb-4">
 
-                        <img src="{{ asset('uploads/produk/' . $item->gambar) }}"
-                             class="w-full h-40 object-cover rounded-lg">
-
-                    </div>
-
-                    <p class="text-xs text-gray-400">
+                    <!-- KATEGORI -->
+                    <p class="text-sm text-gray-400">
 
                         {{ $item->kategori->nama_kategori }}
 
                     </p>
 
-                    <h3 class="font-semibold text-lg">
+                    <!-- NAMA -->
+                    <h3 class="font-semibold text-lg mb-2">
 
                         {{ $item->nama_produk }}
 
                     </h3>
 
-                    <p class="text-green-600 font-bold">
+                    <!-- HARGA -->
+                    <p class="text-green-600 font-bold text-lg">
 
                         Rp {{ number_format($item->harga, 0, ',', '.') }}
 
                     </p>
 
+                    <!-- BUTTON -->
                     <div class="flex justify-end mt-4">
 
                         @guest
 
                             <a href="{{ route('login') }}"
-                               class="bg-yellow-400 p-2 rounded-full hover:bg-yellow-500">
+                               class="bg-yellow-400 p-3 rounded-full hover:bg-yellow-500 transition">
 
                                 <img src="{{ asset('assets/img/logoKeranjangPutih.png') }}"
-                                     width="23">
+                                     width="24">
 
                             </a>
 
                         @else
 
                             <a href="/keranjang"
-                               class="bg-yellow-400 p-2 rounded-full hover:bg-yellow-500">
+                               class="bg-yellow-400 p-3 rounded-full hover:bg-yellow-500 transition">
 
                                 <img src="{{ asset('assets/img/logoKeranjangPutih.png') }}"
-                                     width="23">
+                                     width="24">
 
                             </a>
 
@@ -341,82 +359,7 @@
 
 </div>
 
-<!-- FOOTER -->
-<footer class="bg-green-700 text-white py-14 mt-10">
-
-    <div class="max-w-7xl mx-auto px-10">
-
-        <div class="grid grid-cols-4 gap-10">
-
-            <!-- BRAND -->
-            <div>
-
-                <img src="{{ asset('assets/img/contrasLogoFlomart.png') }}"
-                     width="150">
-
-                <p class="text-sm mb-4">
-
-                    Marketplace tanaman ramah lingkungan terpercaya
-
-                </p>
-
-            </div>
-
-            <!-- LAYANAN -->
-            <div>
-
-                <h3 class="font-semibold mb-4">
-                    Layanan
-                </h3>
-
-                <ul class="space-y-2 text-sm">
-
-                    <li>Belanja Tanaman</li>
-                    <li>Bibit & Media Tanaman</li>
-                    <li>Filter Kecocokan Tanaman</li>
-
-                </ul>
-
-            </div>
-
-            <!-- BANTUAN -->
-            <div>
-
-                <h3 class="font-semibold mb-4">
-                    Bantuan
-                </h3>
-
-                <ul class="space-y-2 text-sm">
-
-                    <li>Cara Belanja</li>
-                    <li>Cara Menjual Tanaman</li>
-                    <li>Pengiriman & Perawatan</li>
-
-                </ul>
-
-            </div>
-
-            <!-- SOSMED -->
-            <div>
-
-                <h3 class="font-semibold mb-4">
-                    Ikuti Kami
-                </h3>
-
-                <ul class="space-y-2 text-sm">
-
-                    <li>Instagram - @flomart.id</li>
-                    <li>Facebook - FLOMART</li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</footer>
+<x-footer />
 
 </body>
 </html>

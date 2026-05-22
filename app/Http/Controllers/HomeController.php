@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
 use App\Models\Kategori;
+use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $kategoriAktif = $request->kategori;
+
         // kategori
         $kategori = Kategori::orderBy('nama_kategori')->get();
 
-        // rekomendasi produk
-        $rekomendasi = Produk::latest('id_produk')
-            ->take(4)
+        // rekomendasi
+        $rekomendasi = Produk::with('kategori')
+            ->orderByDesc('id_produk')
+            ->limit(4)
             ->get();
 
-        // semua produk
+        // produk
         $produk = Produk::with('kategori')
+            ->when($kategoriAktif, function ($query) use ($kategoriAktif) {
+                $query->where('id_kategori', $kategoriAktif);
+            })
             ->where('stok', '>', 0)
             ->latest('id_produk')
             ->get();
@@ -27,7 +34,8 @@ class HomeController extends Controller
         return view('user.index', compact(
             'kategori',
             'rekomendasi',
-            'produk'
+            'produk',
+            'kategoriAktif'
         ));
     }
 }
