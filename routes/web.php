@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\mulaijualanController;
+use App\Http\Controllers\TentangKamiController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -24,3 +25,6 @@ Route::post('/register', [AuthController::class, 'registerPost'])
 
 Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
+
+Route::get('/tentangkami', [TentangKamiController::class, 'index'])
+    ->name('tentangkami');

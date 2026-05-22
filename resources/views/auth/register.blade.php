@@ -138,60 +138,7 @@
 
 </main>
 
-<!-- FOOTER -->
-<footer class="bg-green-700 text-white px-16 py-14">
-
-    <div class="grid grid-cols-4 gap-10">
-
-        <div>
-
-            <img src="{{ asset('assets/img/contrasLogoFlomart.png') }}"
-                 width="150">
-
-            <p class="text-sm mb-4">
-                Marketplace tanaman ramah lingkungan terpercaya
-            </p>
-
-        </div>
-
-        <div>
-
-            <h3 class="font-semibold mb-4">Layanan</h3>
-
-            <ul class="space-y-2 text-sm">
-                <li>Belanja Tanaman</li>
-                <li>Bibit & Media Tanaman</li>
-                <li>Filter Kecocokan Tanaman</li>
-            </ul>
-
-        </div>
-
-        <div>
-
-            <h3 class="font-semibold mb-4">Bantuan</h3>
-
-            <ul class="space-y-2 text-sm">
-                <li>Cara Belanja</li>
-                <li>Cara Menjual Tanaman</li>
-                <li>Pengiriman & Perawatan</li>
-            </ul>
-
-        </div>
-
-        <div>
-
-            <h3 class="font-semibold mb-4">Ikuti Kami</h3>
-
-            <ul class="space-y-2 text-sm">
-                <li>Instagram - @flomart.id</li>
-                <li>Facebook - FLOMART</li>
-            </ul>
-
-        </div>
-
-    </div>
-
-</footer>
+<x-footer />
 
 <script>
 function togglePassword(inputId, eyeId) {
