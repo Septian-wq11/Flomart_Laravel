@@ -129,15 +129,9 @@
 
             </a>
 
-            @guest
-                <a href="{{ route('login') }}">
-                    Mulai Jualan
-                </a>
-            @else
-                <a href="/admin/dashboard">
-                    Mulai Jualan
-                </a>
-            @endguest
+           <a href="{{ route('admin.mulaijualan') }}">
+            Mulai Jualan
+            </a>
 
             <a href="#">
                 Tentang Kami
@@ -169,7 +163,7 @@
 
         <div class="rounded-2xl px-10 py-12 flex items-center justify-between
         bg-cover bg-center"
-        style="background-image: url('{{ asset('assets/img/BannerBg.png') }}');">
+        style="background-image: url('{{('public/assets/img/BannerBg.png') }}');">
 
             <div class="max-w-xl">
 
