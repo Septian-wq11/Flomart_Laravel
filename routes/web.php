@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
+Route::get('/', function () {
+    return 'Homepage FLOMART';
+});
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 
