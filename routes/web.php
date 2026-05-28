@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\mulaijualanController;
 use App\Http\Controllers\TentangKamiController;
+use App\Http\Controllers\KeranjangController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -28,6 +29,26 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::get('/tentangkami', [TentangKamiController::class, 'index'])
     ->name('tentangkami');
+
+Route::middleware('auth')->group(function () {
+
+    // tambah ke keranjang
+    Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])
+        ->name('keranjang.tambah');
+
+    // halaman keranjang
+    Route::get('/keranjang', [KeranjangController::class, 'index'])
+        ->name('keranjang');
+
+    // update qty
+Route::post('/keranjang/update-qty', [KeranjangController::class, 'updateQty'])
+    ->name('keranjang.updateQty');
+
+// hapus keranjang
+Route::delete('/keranjang/hapus', [KeranjangController::class, 'hapus'])
+    ->name('keranjang.hapus');
+
+});
 
 
 // TEST SESSION

@@ -75,20 +75,25 @@
 
 {{-- KERANJANG --}}
 @guest
+
     <a href="{{ route('login') }}"
        onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
        class="hover:text-green-600">
 
-        Keranjang
+        Keranjang (0)
 
     </a>
+
 @else
-    <a href="/keranjang"
+
+    <a href="{{ route('keranjang') }}"
        class="hover:text-green-600">
 
         Keranjang
+        ({{ \App\Models\Keranjang::where('id_user', Auth::user()->id_user)->count() }})
 
     </a>
+
 @endguest
 
                 {{-- AVATAR --}}
