@@ -73,6 +73,24 @@
     </a>
 @endguest
 
+{{-- KERANJANG --}}
+@guest
+    <a href="{{ route('login') }}"
+       onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
+       class="hover:text-green-600">
+
+        Keranjang
+
+    </a>
+@else
+    <a href="/keranjang"
+       class="hover:text-green-600">
+
+        Keranjang
+
+    </a>
+@endguest
+
                 {{-- AVATAR --}}
                 <div class="w-8 h-8 rounded-full border-2 border-green-500
                 flex items-center justify-center text-green-600 text-xs">
@@ -100,7 +118,8 @@
                     @csrf
 
                     <button
-                        class="bg-red-500 text-white px-5 py-2 rounded-xl hover:bg-red-600 transition">
+                    onclick="return confirm('Apakah Anda yakin ingin logout?')"    
+                    class="bg-red-500 text-white px-5 py-2 rounded-xl hover:bg-red-600 transition">
 
                         Logout
 

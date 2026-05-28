@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -34,7 +35,7 @@ class AuthController extends Controller
         User::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'role' => 'pembeli',
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp
@@ -44,43 +45,52 @@ class AuthController extends Controller
             ->with('success', 'Registrasi berhasil');
     }
 
+    // ================= PROSES LOGIN =================
     public function loginPost(Request $request)
-{
-    $request->validate([
-        'email' => 'required',
-        'password' => 'required',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    $user = User::where('email', $request->email)->first();
+        // remember me
+        $remember = $request->has('remember');
 
-    // cek user dan password plaintext
-    if ($user && $request->password == $user->password) {
+        // login laravel
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ], $remember)) {
 
-        Auth::login($user);
+            $request->session()->regenerate();
 
-        $request->session()->regenerate();
+            $user = Auth::user();
 
-        // redirect berdasarkan role
-        if ($user->role == 'admin') {
+            // ADMIN
+            if ($user->role == 'admin') {
 
-            return redirect('/admin/dashboard');
+                return redirect('/admin/dashboard');
 
-        } elseif ($user->role == 'owner') {
+            }
 
-            return redirect('/owner/dashboard');
+            // OWNER
+            elseif ($user->role == 'owner') {
 
-        } else {
+                return redirect('/owner/dashboard');
 
-            return redirect('/');
+            }
 
+            // PEMBELI
+            else {
+
+                return redirect('/');
+
+            }
         }
 
+        return back()->with('error', 'Email atau password salah!');
     }
 
-    return back()->withErrors([
-        'email' => 'Email atau password salah',
-    ]);
-}
     // ================= LOGOUT =================
     public function logout(Request $request)
     {
@@ -90,6 +100,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

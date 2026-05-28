@@ -57,6 +57,16 @@
                 </p>
             @endif
 
+            @if(session('timeout'))
+
+    <p class="text-orange-500 mb-3">
+
+        {{ session('timeout') }}
+
+    </p>
+
+@endif
+
             <form action="{{ route('login.post') }}"
                   method="POST"
                   class="space-y-4">

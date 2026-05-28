@@ -28,3 +28,11 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::get('/tentangkami', [TentangKamiController::class, 'index'])
     ->name('tentangkami');
+
+
+// TEST SESSION
+Route::middleware('auth')->get('/test-session', function () {
+
+    return "MASIH LOGIN";
+
+});
