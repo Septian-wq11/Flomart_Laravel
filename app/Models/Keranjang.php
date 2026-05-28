@@ -13,16 +13,18 @@ class Keranjang extends Model
     protected $fillable = [
         'id_user',
         'id_produk',
-        'jumlah'
+        'qty'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user');
-    }
-
+    // RELASI PRODUK
     public function produk()
     {
         return $this->belongsTo(Produk::class, 'id_produk');
+    }
+
+    // RELASI USER
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

@@ -134,19 +134,24 @@
 
         </a>
 
-    @else
+   @else
 
-        <!-- Jika sudah login -->
-        <a href="/keranjang"
-           class="bg-yellow-400 p-3 rounded-full hover:bg-yellow-500 transition">
+    <form action="{{ route('keranjang.tambah', $item->id_produk) }}"
+          method="POST">
+
+        @csrf
+
+        <button
+            class="bg-yellow-400 p-3 rounded-full hover:bg-yellow-500 transition">
 
             <img src="{{ asset('assets/img/logoKeranjangPutih.png') }}"
                  width="24">
 
-        </a>
+        </button>
 
-    @endguest
+    </form>
 
+@endguest
 </div>
 
 </div>
