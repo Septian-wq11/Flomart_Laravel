@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\mulaijualanController;
 use App\Http\Controllers\TentangKamiController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PesananController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -57,3 +58,13 @@ Route::middleware('auth')->get('/test-session', function () {
     return "MASIH LOGIN";
 
 });
+
+Route::post('/checkout', [PesananController::class, 'checkout']) ->name('checkout');
+
+Route::get('/pesanan-saya', [PesananController::class, 'index']) ->name('pesanan.saya');
+
+Route::get('/pembayaran/{id}', [PesananController::class, 'pembayaran']) ->name('pembayaran');
+
+Route::post('/upload-bukti/{id}', [PesananController::class, 'uploadBukti']) ->name('upload.bukti');
+
+Route::post('/batalkan-pesanan/{id}', [PesananController::class, 'batalkan']) ->name('batalkan.pesanan');

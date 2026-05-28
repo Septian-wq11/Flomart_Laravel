@@ -52,9 +52,10 @@
 
     @else
 
-    <form action="{{ route('keranjang.updateQty') }}"
+    <form action="{{ route('checkout') }}"
       method="POST">
 
+        @csrf
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -73,9 +74,11 @@
                     <div class="flex items-center gap-5 flex-1">
 
                         <!-- CHECKBOX -->
-                        <input type="checkbox"
-                               class="item-check w-5 h-5 accent-green-600"
-                               data-total="{{ $totalItem }}">
+                       <input type="checkbox"
+                            name="selected_items[]"
+                            value="{{ $item->id_keranjang }}"
+                            class="item-check w-5 h-5 accent-green-600"
+                            data-total="{{ $totalItem }}">
 
                         <!-- GAMBAR -->
                         <img src="{{ asset('uploads/produk/' . $item->produk->gambar) }}"
@@ -262,7 +265,7 @@
 
                         </label>
 
-                        <select id="ongkir"
+                        <select id="ongkir" name="ongkir"
                                 class="w-full border rounded-lg px-4 py-2">
 
                             <option value="0">Pilih Wilayah</option>
@@ -283,7 +286,7 @@
 
                         </label>
 
-                        <textarea
+                        <textarea name="catatan"
                             class="w-full border rounded-lg px-4 py-2"
                             placeholder="Contoh: kirim sore hari"></textarea>
 
@@ -298,7 +301,7 @@
 
                         </label>
 
-                        <select
+                        <select name="metode_pembayaran"
                             class="w-full border rounded-lg px-4 py-2">
 
                             <option>COD</option>
@@ -351,13 +354,16 @@
                 </div>
 
                 <!-- CHECKOUT -->
-                <button
-                    onclick="return validasi()"
-                    class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition">
+                    <button
+                        type="submit"
+                        onclick="return validasi()"
+                        class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition">
 
-                    Checkout
+                        Checkout
 
-                </button>
+                    </button>
+
+
 
             </div>
 
