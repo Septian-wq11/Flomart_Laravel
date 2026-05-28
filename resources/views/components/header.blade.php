@@ -19,55 +19,59 @@
             <nav class="flex items-center gap-6 text-gray-700 font-medium text-sm">
 
                 {{-- CHAT --}}
-                @guest
-                    <a href="{{ route('login') }}"
-                       class="hover:text-green-600">
+                {{-- CHAT --}}
+@guest
+    <a href="{{ route('login') }}"
+       onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
+       class="hover:text-green-600">
 
-                        Chat
+        Chat
 
-                    </a>
-                @else
-                    <a href="/chat"
-                       class="hover:text-green-600">
+    </a>
+@else
+    <a href="/chat"
+       class="hover:text-green-600">
 
-                        Chat
+        Chat
 
-                    </a>
-                @endguest
+    </a>
+@endguest
 
                 {{-- PESANAN --}}
-                @guest
-                    <a href="{{ route('login') }}"
-                       class="hover:text-green-600">
+@guest
+    <a href="{{ route('login') }}"
+       onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
+       class="hover:text-green-600">
 
-                        Pesanan
+        Pesanan
 
-                    </a>
-                @else
-                    <a href="/pesanan"
-                       class="hover:text-green-600">
+    </a>
+@else
+    <a href="/pesanan"
+       class="hover:text-green-600">
 
-                        Pesanan
+        Pesanan
 
-                    </a>
-                @endguest
+    </a>
+@endguest
 
                 {{-- NOTIFIKASI --}}
-                @guest
-                    <a href="{{ route('login') }}"
-                       class="hover:text-green-600">
+@guest
+    <a href="{{ route('login') }}"
+       onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
+       class="hover:text-green-600">
 
-                        Notifikasi
+        Notifikasi
 
-                    </a>
-                @else
-                    <a href="/notifikasi"
-                       class="hover:text-green-600">
+    </a>
+@else
+    <a href="/notifikasi"
+       class="hover:text-green-600">
 
-                        Notifikasi
+        Notifikasi
 
-                    </a>
-                @endguest
+    </a>
+@endguest
 
                 {{-- AVATAR --}}
                 <div class="w-8 h-8 rounded-full border-2 border-green-500

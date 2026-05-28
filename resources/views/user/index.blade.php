@@ -113,13 +113,43 @@
                     </h3>
 
                     <!-- HARGA -->
-                    <p class="text-green-600 font-bold text-lg">
+<p class="text-green-600 font-bold text-lg">
 
-                        Rp {{ number_format($item->harga, 0, ',', '.') }}
+    Rp {{ number_format($item->harga, 0, ',', '.') }}
 
-                    </p>
+</p>
 
-                </div>
+<!-- BUTTON KERANJANG -->
+<div class="flex justify-end mt-4">
+
+    @guest
+
+        <!-- Jika belum login -->
+        <a href="{{ route('login') }}"
+            onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
+           class="bg-yellow-400 p-3 rounded-full hover:bg-yellow-500 transition">
+
+            <img src="{{ asset('assets/img/logoKeranjangPutih.png') }}"
+                 width="24">
+
+        </a>
+
+    @else
+
+        <!-- Jika sudah login -->
+        <a href="/keranjang"
+           class="bg-yellow-400 p-3 rounded-full hover:bg-yellow-500 transition">
+
+            <img src="{{ asset('assets/img/logoKeranjangPutih.png') }}"
+                 width="24">
+
+        </a>
+
+    @endguest
+
+</div>
+
+</div>
 
             @endforeach
 
@@ -146,9 +176,11 @@
 
             @foreach($kategori as $item)
 
-                <a href="/?kategori={{ $item->id_kategori }}"
-                   class="px-5 py-2 rounded-full bg-white border
-                   hover:bg-green-100 hover:text-green-700 transition">
+                <a href="/?kategori={{ $item->id_kategori }}#produk"
+                   class="px-5 py-2 rounded-full border transition
+           {{ request('kategori') == $item->id_kategori
+                ? 'bg-green-600 text-white'
+                : 'bg-white text-black hover:bg-green-100 hover:text-green-700' }}">
 
                     {{ $item->nama_kategori }}
 
@@ -161,7 +193,7 @@
     </section>
 
     <!-- PRODUK -->
-    <section class="mb-32">
+    <section id="produk" class="mb-32">
 
         <div class="grid grid-cols-4 gap-6">
 
@@ -200,8 +232,8 @@
                         @guest
 
                             <a href="{{ route('login') }}"
+                               onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
                                class="bg-yellow-400 p-3 rounded-full hover:bg-yellow-500 transition">
-
                                 <img src="{{ asset('assets/img/logoKeranjangPutih.png') }}"
                                      width="24">
 
