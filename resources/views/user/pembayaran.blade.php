@@ -66,12 +66,40 @@
 
         @endforeach
 
-        <div class="text-right font-bold text-green-600 mt-4">
+<!-- ONGKIR -->
+<div class="flex justify-between mt-2 text-gray-700">
 
-            Total:
-            Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}
+    <span>Ongkos Kirim</span>
 
-        </div>
+    <span>
+        Rp {{ number_format($pesanan->ongkir, 0, ',', '.') }}
+    </span>
+
+</div>
+
+        <!-- SUBTOTAL -->
+<div class="flex justify-between mt-6 text-gray-700">
+
+    <span>Subtotal Produk</span>
+
+    <span>
+        Rp {{ number_format($pesanan->total_harga - $pesanan->ongkir, 0, ',', '.') }}
+    </span>
+
+</div>
+
+<hr class="my-4">
+
+<!-- TOTAL -->
+<div class="flex justify-between font-bold text-2xl text-green-600">
+
+    <span>Total Belanja</span>
+
+    <span>
+        Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}
+    </span>
+
+</div>
 
         <hr class="my-4">
 

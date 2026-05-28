@@ -17,9 +17,20 @@
     <!-- HEADER -->
     <div class="bg-white p-5 rounded-xl shadow mb-6 flex justify-between items-center">
 
+        @if(session('success'))
+
+<div class="bg-green-100 text-green-700 p-4 rounded-xl mb-6">
+
+    {{ session('success') }}
+
+</div>
+
+@endif
+
         <h1 class="text-2xl font-bold text-gray-800">
             Pesanan Saya
         </h1>
+        
 
         <a href="{{ route('home') }}"
            class="text-green-600 hover:underline">
@@ -48,7 +59,7 @@
 
             $warna = "bg-gray-200 text-gray-700";
 
-            if ($p->status_pesanan == 'pending')
+            if ($p->status_pesanan == 'menunggu')
                 $warna = "bg-yellow-100 text-yellow-700";
 
             if ($p->status_pesanan == 'diproses')
@@ -146,7 +157,7 @@
             <div class="mt-4 flex justify-between items-center">
 
                 <!-- DETAIL -->
-                <a href="#"
+                <a href="{{ route('pesanan.detail', $p->id_pesanan) }}"
                    class="text-blue-600 text-sm hover:underline">
 
                     Detail
@@ -156,31 +167,30 @@
                 <!-- BUTTON -->
                 <div class="flex gap-2">
 
-                    @if(
-                        $p->metode_pembayaran == 'Transfer' &&
-                        $p->status_pesanan == 'pending'
-                    )
+                    @if($p->metode_pembayaran == 'Transfer')
 
-                        @if(!$p->bukti_pembayaran)
+    {{-- BELUM UPLOAD --}}
+    @if($p->status_pesanan == 'pending')
 
-                            <a href="{{ route('pembayaran', $p->id_pesanan) }}"
-                               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+        <a href="{{ route('pembayaran', $p->id_pesanan) }}"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
 
-                                Upload Bukti
+            Upload Bukti
 
-                            </a>
+        </a>
 
-                        @else
+    {{-- SUDAH UPLOAD --}}
+    @elseif($p->status_pesanan == 'menunggu')
 
-                            <span class="text-sm text-gray-500 italic">
+        <span class="text-sm text-yellow-600 italic font-medium">
 
-                                Menunggu Verifikasi
+            Menunggu Verifikasi Admin
 
-                            </span>
+        </span>
 
-                        @endif
+    @endif
 
-                    @endif
+@endif
 
                     <!-- BATALKAN -->
                     @if($p->status_pesanan == 'pending')

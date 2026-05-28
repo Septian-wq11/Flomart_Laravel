@@ -49,6 +49,13 @@ Route::post('/keranjang/update-qty', [KeranjangController::class, 'updateQty'])
 Route::delete('/keranjang/hapus', [KeranjangController::class, 'hapus'])
     ->name('keranjang.hapus');
 
+Route::middleware('auth')->group(function () {
+
+    Route::get('/pesanan/{id}', [PesananController::class, 'detail'])
+        ->name('pesanan.detail');
+
+});
+
 });
 
 

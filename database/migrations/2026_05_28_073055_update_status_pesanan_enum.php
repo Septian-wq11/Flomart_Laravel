@@ -12,9 +12,8 @@ return new class extends Migration
             ALTER TABLE pesanan
             MODIFY status_pesanan
             ENUM(
-                'pending',
+                'menunggu',
                 'diproses',
-                'dikirim',
                 'selesai',
                 'dibatalkan'
             ) NOT NULL
@@ -27,8 +26,8 @@ return new class extends Migration
             ALTER TABLE pesanan
             MODIFY status_pesanan
             ENUM(
+                'menunggu',
                 'diproses',
-                'dikirim',
                 'selesai',
                 'dibatalkan'
             ) NOT NULL

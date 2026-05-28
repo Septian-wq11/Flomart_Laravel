@@ -46,21 +46,26 @@ $selected = $request->selected_items ?? [];
             $subtotal += $item->produk->harga * $item->qty;
         }
 
-        $ongkir = $request->ongkir;
+        $ongkir = (int) $request->ongkir;
         $total = $subtotal + $ongkir;
 
         // SIMPAN PESANAN
         $pesanan = Pesanan::create([
-            'id_user' => $user->id_user,
-            'tanggal_pesanan' => now(),
-            'total_harga' => $total,
-            'status_pesanan' => 'pending',
-            'alamat_kirim' => $user->alamat,
-            'metode_pembayaran' => $request->metode_pembayaran,
-            'catatan' => $request->catatan,
-            'nama_penerima' => $user->nama,
-            'no_hp' => $user->no_hp
-        ]);
+
+    'id_user' => $user->id_user,
+    'tanggal_pesanan' => now(),
+    'total_harga' => $total,
+    'ongkir' => (int) $ongkir,
+    'status_pesanan' => $request->metode_pembayaran == 'COD'
+        ? 'diproses'
+        : 'pending',
+    'alamat_kirim' => $user->alamat,
+    'metode_pembayaran' => $request->metode_pembayaran,
+    'catatan' => $request->catatan,
+    'nama_penerima' => $user->nama,
+    'no_hp' => $user->no_hp
+
+]);
 
         // DETAIL PESANAN
         foreach($keranjang as $item){
@@ -78,14 +83,19 @@ $selected = $request->selected_items ?? [];
         }
 
         // HAPUS KERANJANG
-        Keranjang::where('id_user', $user->id_user)->delete();
+        Keranjang::whereIn('id_keranjang', $request->selected_items)
+    ->delete();
 
         // REDIRECT
         if($request->metode_pembayaran == 'COD'){
-            return redirect()->route('pesanan.saya');
+            return redirect()
+        ->route('pesanan.saya')
+        ->with('success', 'Pesanan berhasil dibuat!');
         }
 
-        return redirect()->route('pembayaran', $pesanan->id_pesanan);
+        return redirect()
+    ->route('pembayaran', $pesanan->id_pesanan)
+    ->with('success', 'Pesanan berhasil dibuat!');
     }
 
     // HALAMAN PEMBAYARAN
@@ -113,8 +123,9 @@ $selected = $request->selected_items ?? [];
         $file->move(public_path('uploads/bukti'), $namaFile);
 
         $pesanan->update([
-            'bukti_pembayaran' => $namaFile
-        ]);
+    'bukti_pembayaran' => $namaFile,
+    'status_pesanan' => 'menunggu'
+]);
 
         return back();
     }
@@ -139,4 +150,31 @@ $selected = $request->selected_items ?? [];
 
         return back();
     }
+
+    public function detail($id)
+{
+    $user = Auth::user();
+
+    // ambil pesanan
+    $pesanan = Pesanan::where('id_pesanan', $id)
+        ->where('id_user', $user->id_user)
+        ->first();
+
+    if (!$pesanan) {
+
+        abort(404);
+
+    }
+
+    // ambil detail produk
+    $detail = DetailPesanan::where('id_pesanan', $id)
+        ->with('produk')
+        ->get();
+
+    return view('user.detail_pesanan', compact(
+        'pesanan',
+        'detail'
+    ));
+}
+
 }

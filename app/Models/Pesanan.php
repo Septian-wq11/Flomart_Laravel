@@ -11,17 +11,18 @@ class Pesanan extends Model
     protected $primaryKey = 'id_pesanan';
 
     protected $fillable = [
-        'id_user',
-        'tanggal_pesanan',
-        'total_harga',
-        'status_pesanan',
-        'alamat_kirim',
-        'metode_pembayaran',
-        'catatan',
-        'bukti_pembayaran',
-        'nama_penerima',
-        'no_hp'
-    ];
+    'id_user',
+    'tanggal_pesanan',
+    'total_harga',
+    'ongkir',
+    'status_pesanan',
+    'alamat_kirim',
+    'metode_pembayaran',
+    'catatan',
+    'bukti_pembayaran',
+    'nama_penerima',
+    'no_hp'
+];
 
     public function user()
     {

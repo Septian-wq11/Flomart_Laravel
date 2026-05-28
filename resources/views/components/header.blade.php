@@ -47,7 +47,7 @@
 
     </a>
 @else
-    <a href="/pesanan"
+    <a href="{{ route('pesanan.saya') }}"
        class="hover:text-green-600">
 
         Pesanan
