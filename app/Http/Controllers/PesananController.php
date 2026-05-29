@@ -127,7 +127,10 @@ $selected = $request->selected_items ?? [];
     'status_pesanan' => 'menunggu'
 ]);
 
-        return back();
+        return back()->with(
+    'success',
+    'Bukti pembayaran berhasil diupload!'
+);
     }
 
     // BATALKAN PESANAN

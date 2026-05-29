@@ -15,9 +15,25 @@
 <div class="max-w-6xl mx-auto pt-40 pb-20 px-6">
 
     <!-- HEADER -->
-    <div class="bg-white p-5 rounded-xl shadow mb-6 flex justify-between items-center">
+<div class="bg-white p-5 rounded-xl shadow mb-6 flex justify-between items-center">
 
-        @if(session('success'))
+    <h1 class="text-2xl font-bold text-gray-800">
+
+        Pesanan Saya
+
+    </h1>
+
+    <a href="{{ route('home') }}"
+       class="text-green-600 hover:underline">
+
+        ← Kembali
+
+    </a>
+
+</div>
+
+<!-- ALERT -->
+@if(session('success'))
 
 <div class="bg-green-100 text-green-700 p-4 rounded-xl mb-6">
 
@@ -26,20 +42,6 @@
 </div>
 
 @endif
-
-        <h1 class="text-2xl font-bold text-gray-800">
-            Pesanan Saya
-        </h1>
-        
-
-        <a href="{{ route('home') }}"
-           class="text-green-600 hover:underline">
-
-            ← Kembali
-
-        </a>
-
-    </div>
 
     @if($pesanan->count() == 0)
 

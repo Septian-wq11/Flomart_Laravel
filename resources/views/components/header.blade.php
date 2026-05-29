@@ -64,8 +64,10 @@
 
     </a>
 @else
-    <a href="/notifikasi"
-       class="{{ request()->is('notifikasi*') ? 'text-green-600 border-b-2 border-green-600 pb-1' : 'hover:text-green-600' }}">
+    <a href="{{ route('notifikasi') }}"
+class="{{ request()->is('notifikasi*')
+? 'text-green-600 border-b-2 border-green-600 pb-1'
+: 'hover:text-green-600' }}">
 
         Notifikasi
 

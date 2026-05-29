@@ -7,6 +7,7 @@ use App\Http\Controllers\mulaijualanController;
 use App\Http\Controllers\TentangKamiController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\NotifikasiController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -30,6 +31,9 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::get('/tentangkami', [TentangKamiController::class, 'index'])
     ->name('tentangkami');
+
+Route::get('/notifikasi', [NotifikasiController::class, 'index'])
+    ->name('notifikasi');
 
 Route::middleware('auth')->group(function () {
 
