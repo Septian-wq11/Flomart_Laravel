@@ -16,7 +16,7 @@ class TentangKamiController extends Controller
             $jumlahKeranjang = Keranjang::where(
                 'id_user',
                 Auth::user()->id_user
-            )->sum('jumlah');
+            )->sum('qty');
         }
 
         return view('user.tentangkami', compact(
