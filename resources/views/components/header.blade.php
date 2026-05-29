@@ -19,7 +19,6 @@
             <nav class="flex items-center gap-6 text-gray-700 font-medium text-sm">
 
                 {{-- CHAT --}}
-                {{-- CHAT --}}
 @guest
     <a href="{{ route('login') }}"
        onclick="return confirm('Anda harus login terlebih dahulu. Login sekarang?')"
@@ -30,7 +29,7 @@
     </a>
 @else
     <a href="/chat"
-       class="hover:text-green-600">
+       class="{{ request()->is('chat*') ? 'text-green-600 border-b-2 border-green-600 pb-1' : 'hover:text-green-600' }}">
 
         Chat
 
@@ -48,7 +47,7 @@
     </a>
 @else
     <a href="{{ route('pesanan.saya') }}"
-       class="hover:text-green-600">
+       class="{{ request()->is('pesanan*') ? 'text-green-600 border-b-2 border-green-600 pb-1' : 'hover:text-green-600' }}">
 
         Pesanan
 
@@ -66,7 +65,7 @@
     </a>
 @else
     <a href="/notifikasi"
-       class="hover:text-green-600">
+       class="{{ request()->is('notifikasi*') ? 'text-green-600 border-b-2 border-green-600 pb-1' : 'hover:text-green-600' }}">
 
         Notifikasi
 
@@ -87,7 +86,7 @@
 @else
 
     <a href="{{ route('keranjang') }}"
-       class="hover:text-green-600">
+       class="{{ request()->is('keranjang*') ? 'text-green-600 border-b-2 border-green-600 pb-1' : 'hover:text-green-600' }}">
 
         Keranjang
         ({{ \App\Models\Keranjang::where('id_user', Auth::user()->id_user)->count() }})
