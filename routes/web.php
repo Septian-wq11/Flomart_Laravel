@@ -9,6 +9,9 @@ use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\TokoController;
+use App\Http\Controllers\ProdukController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -96,3 +99,9 @@ Route::get('/pembayaran/{id}', [PesananController::class, 'pembayaran']) ->name(
 Route::post('/upload-bukti/{id}', [PesananController::class, 'uploadBukti']) ->name('upload.bukti');
 
 Route::post('/batalkan-pesanan/{id}', [PesananController::class, 'batalkan']) ->name('batalkan.pesanan');
+
+Route::get('/toko', [TokoController::class, 'index'])
+    ->name('toko');
+
+Route::get('/produk/{id}', [TokoController::class, 'detail'])
+    ->name('produk.detail');

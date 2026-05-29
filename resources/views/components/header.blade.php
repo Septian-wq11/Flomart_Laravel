@@ -152,6 +152,15 @@ class="{{ request()->is('notifikasi*')
 
             </a>
 
+            <a href="{{ route('toko') }}"
+   class="{{ request()->routeIs('toko') || request()->routeIs('produk.detail')
+   ? 'text-green-600 border-b-2 border-green-600 pb-1'
+   : 'hover:text-green-600' }}">
+
+    Toko
+
+</a>
+
             <!-- MULAI JUALAN -->
             <a href="{{ route('mulaijualan') }}"
                class="{{ request()->routeIs('mulaijualan') ? 'text-green-600 border-b-2 border-green-600 pb-1' : 'hover:text-green-600' }}">
