@@ -8,6 +8,7 @@ use App\Http\Controllers\TentangKamiController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -67,6 +68,22 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->get('/test-session', function () {
 
     return "MASIH LOGIN";
+
+});
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/chat',
+        [ChatController::class,'index'])
+        ->name('chat');
+
+    Route::get('/chat/admin',
+        [ChatController::class,'room'])
+        ->name('chat.room');
+
+    Route::post('/chat/send',
+        [ChatController::class,'send'])
+        ->name('chat.send');
 
 });
 
