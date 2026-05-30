@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Auth\AuthenticationException;
+use App\Http\Middleware\SessionTimeout;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,8 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
 
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+        'session.timeout' => SessionTimeout::class,
+    ]);
 
-        //
+    $middleware->web(append: [
+        SessionTimeout::class,
+    ]);
+
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {
