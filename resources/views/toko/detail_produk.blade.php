@@ -179,6 +179,12 @@
                         @csrf
 
                         <input
+    type="hidden"
+    name="qty"
+    id="hiddenQty"
+    value="1">
+
+                        <input
                             type="hidden"
                             name="id_produk"
                             value="{{ $produk->id_produk }}">
@@ -240,6 +246,44 @@
 </div>
 
 <x-footer />
+
+<script>
+
+function increaseQty()
+{
+    let qtyInput = document.getElementById('qty');
+
+    let hiddenQty = document.getElementById('hiddenQty');
+
+    let currentQty = parseInt(qtyInput.value);
+
+    let maxQty = parseInt(qtyInput.max);
+
+    if(currentQty < maxQty)
+    {
+        qtyInput.value = currentQty + 1;
+
+        hiddenQty.value = qtyInput.value;
+    }
+}
+
+function decreaseQty()
+{
+    let qtyInput = document.getElementById('qty');
+
+    let hiddenQty = document.getElementById('hiddenQty');
+
+    let currentQty = parseInt(qtyInput.value);
+
+    if(currentQty > 1)
+    {
+        qtyInput.value = currentQty - 1;
+
+        hiddenQty.value = qtyInput.value;
+    }
+}
+
+</script>
 
 </body>
 </html>

@@ -11,6 +11,7 @@ use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\BlogController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -105,3 +106,9 @@ Route::get('/toko', [TokoController::class, 'index'])
 
 Route::get('/produk/{id}', [TokoController::class, 'detail'])
     ->name('produk.detail');
+
+Route::get('/blog', [BlogController::class, 'index'])
+    ->name('blog.index');
+
+Route::get('/blog/{id}', [BlogController::class, 'detail'])
+    ->name('blog.detail');

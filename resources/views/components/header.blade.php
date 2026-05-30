@@ -169,6 +169,15 @@ class="{{ request()->is('notifikasi*')
 
             </a>
 
+            <a href="{{ route('blog.index') }}"
+class="{{ request()->routeIs('blog.*')
+? 'text-green-600 border-b-2 border-green-600 pb-1'
+: 'hover:text-green-600' }}">
+
+    Blog
+
+</a>
+
             <!-- TENTANG -->
             <a href="{{ route('tentangkami') }}"
                class="{{ request()->routeIs('tentangkami') ? 'text-green-600 border-b-2 border-green-600 pb-1' : 'hover:text-green-600' }}">

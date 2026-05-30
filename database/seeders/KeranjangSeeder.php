@@ -14,7 +14,7 @@ class KeranjangSeeder extends Seeder
             [
                 'id_user' => 3,
                 'id_produk' => 1,
-                'jumlah' => 5,
+                'qty' => 5,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

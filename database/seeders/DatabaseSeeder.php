@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
             KeranjangSeeder::class,
             PesananSeeder::class,
             DetailPesananSeeder::class,
+            BlogSeeder::class,
         ]);
     }
+    
 }
