@@ -43,6 +43,14 @@
                 Log In
             </h2>
 
+            @if(session('expired'))
+
+<div class="mb-4 text-orange-500">
+    {{ session('expired') }}
+</div>
+
+@endif
+
             {{-- SUCCESS --}}
             @if(session('success'))
                 <p class="text-green-500 mb-3">

@@ -28,6 +28,8 @@ return new class extends Migration
 
             $table->string('no_hp')->nullable();
 
+            $table->rememberToken();
+
             $table->timestamps();
         });
     }
