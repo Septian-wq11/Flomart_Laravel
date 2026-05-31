@@ -81,7 +81,7 @@
                             data-total="{{ $totalItem }}">
 
                         <!-- GAMBAR -->
-                        <img src="{{ asset('uploads/produk/' . $item->produk->gambar) }}"
+                        <img src="{{ asset('storage/' . $item->produk->gambar)}}"
                              class="w-24 h-24 object-cover rounded-xl border">
 
                         <!-- DETAIL -->

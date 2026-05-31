@@ -173,7 +173,7 @@
    class="bg-gray-50 flex items-center justify-center h-48">
 
     <img
-        src="{{ asset('assets/img/' . $item->gambar) }}"
+        src="{{ asset('storage/' . $item->gambar) }}"
         class="max-h-40 object-contain">
 
 </a>

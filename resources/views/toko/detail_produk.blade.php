@@ -38,7 +38,7 @@
     <div class="bg-gray-100 rounded-2xl p-5">
 
         <img
-            src="{{ asset('uploads/produk/'.$produk->gambar) }}"
+            src="{{ asset('storage/' . $produk->gambar) }}"
             alt="{{ $produk->nama_produk }}"
             class="w-full h-[500px] object-cover rounded-xl">
 

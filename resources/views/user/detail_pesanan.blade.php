@@ -58,7 +58,7 @@
         <div class="flex items-center justify-between border-b py-4 gap-4">
 
             <!-- GAMBAR -->
-            <img src="{{ asset('storage/' . $d->produk->gambar) }}"
+            <img src="{{asset('storage/' . $d->produk->gambar)}}"
                  class="w-20 h-20 object-cover rounded-xl border">
 
             <!-- INFO -->

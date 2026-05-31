@@ -114,13 +114,17 @@ class="min-h-screen flex">
 
             </a>
 
-            <a href="#"
-               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition">
+            <a href="{{ route('produk.index') }}"
+    class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition
+    {{ request()->routeIs('produk.*') ? 'bg-white/10' : '' }}">
 
-                <i class="fa-solid fa-box"></i>
-                Produk
+    <i class="fa-solid fa-box"></i>
 
-            </a>
+    <span x-show="desktopSidebar">
+        Produk
+    </span>
+
+</a>
 
             <a href="#"
                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition">

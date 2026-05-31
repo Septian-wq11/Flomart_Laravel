@@ -14,6 +14,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -125,5 +126,7 @@ Route::prefix('admin')
 
         Route::resource('kategori',
         KategoriController::class);
+
+        Route::resource('produk',  AdminProdukController::class);
 
     });

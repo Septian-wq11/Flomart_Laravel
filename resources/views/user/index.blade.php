@@ -95,7 +95,7 @@
                 <div class="bg-white rounded-2xl shadow-md p-4 hover:shadow-xl transition">
 
                     <!-- IMAGE -->
-                    <img src="{{ asset('uploads/produk/' . $item->gambar) }}"
+                    <img src="{{  asset('storage/' . $item->gambar) }}"
                          class="w-full h-48 object-cover rounded-xl mb-4">
 
                     <!-- KATEGORI -->
@@ -213,7 +213,7 @@
                 <div class="bg-white rounded-2xl shadow-md p-4 hover:shadow-xl transition">
 
                     <!-- IMAGE -->
-                    <img src="{{ asset('uploads/produk/' . $item->gambar) }}"
+                    <img src="{{ asset('storage/' . $item->gambar) }}"
                          class="w-full h-48 object-cover rounded-xl mb-4">
 
                     <!-- KATEGORI -->
