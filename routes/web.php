@@ -13,6 +13,7 @@ use App\Http\Controllers\TokoController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KategoriController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -121,5 +122,8 @@ Route::prefix('admin')
         Route::get('/dashboard',
             [DashboardController::class, 'index'])
             ->name('admin.dashboard');
+
+        Route::resource('kategori',
+        KategoriController::class);
 
     });

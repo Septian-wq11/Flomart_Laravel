@@ -102,11 +102,15 @@ class="min-h-screen flex">
 
             </a>
 
-            <a href="#"
-               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition">
+            <a href="{{ route('kategori.index') }}"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition
+                {{ request()->routeIs('kategori.*') ? 'bg-white/10' : '' }}">
 
-                <i class="fa-solid fa-layer-group"></i>
-                Kategori
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    <span x-show="desktopSidebar">
+                        Kategori
+                    </span>
 
             </a>
 
