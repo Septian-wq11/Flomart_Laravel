@@ -12,6 +12,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -112,3 +113,13 @@ Route::get('/blog', [BlogController::class, 'index'])
 
 Route::get('/blog/{id}', [BlogController::class, 'detail'])
     ->name('blog.detail');
+
+Route::prefix('admin')
+    ->middleware(['auth', 'session.timeout', 'admin'])
+    ->group(function () {
+
+        Route::get('/dashboard',
+            [DashboardController::class, 'index'])
+            ->name('admin.dashboard');
+
+    });
