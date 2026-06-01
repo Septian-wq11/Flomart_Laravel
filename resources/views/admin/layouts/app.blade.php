@@ -126,15 +126,17 @@ class="min-h-screen flex">
 
 </a>
 
-            <a href="#"
-               class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition">
+            <a href="{{ route('pesanan.index') }}"
+   class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition
+   {{ request()->routeIs('pesanan.*') ? 'bg-white/10' : '' }}">
 
-                <i class="fa-solid fa-cart-shopping"></i>
-                Pesanan
+    <i class="fa-solid fa-cart-shopping"></i>
 
-            </a>
+    <span x-show="desktopSidebar">
+        Pesanan
+    </span>
 
-        </nav>
+</a>
 
         <!-- User -->
         <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-slate-700">
@@ -183,7 +185,7 @@ class="min-h-screen flex">
     <div class="flex-1 transition-all duration-300">
 
         <!-- Topbar -->
-        <header class="sticky top-0 z-40bg-white/95 backdrop-blur shadow-sm">
+        <header class="sticky top-0 z-40 bg-white/95 backdrop-blur shadow-sm">
 
             <div class="pl-24 pr-6 py-4 flex justify-between items-center">
 

@@ -15,6 +15,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
+use App\Http\Controllers\Admin\PesananController as AdminPesananController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -124,9 +125,19 @@ Route::prefix('admin')
             [DashboardController::class, 'index'])
             ->name('admin.dashboard');
 
-        Route::resource('kategori',
-        KategoriController::class);
+        Route::resource('kategori', KategoriController::class);
 
-        Route::resource('produk',  AdminProdukController::class);
+        Route::resource('produk', AdminProdukController::class);
 
+        Route::resource('pesanan', AdminPesananController::class);
+
+        Route::put(
+            'pesanan/{id}/verifikasi',
+            [AdminPesananController::class, 'verifikasi']
+        )->name('pesanan.verifikasi');
+
+        Route::put(
+            'pesanan/{id}/selesai',
+            [AdminPesananController::class, 'selesai']
+        )->name('pesanan.selesai');
     });

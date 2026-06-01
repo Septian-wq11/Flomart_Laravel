@@ -120,44 +120,42 @@
 <!-- Quick Menu -->
 <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5 mt-8">
 
-    <a href="#"
-       class="bg-green-50 border border-green-200 p-5 rounded-2xl">
+    <!-- Tambah Produk -->
+<a href="{{ route('produk.create') }}"
+   class="bg-green-50 border border-green-200 p-5 rounded-2xl">
+    <h3 class="font-bold text-green-700">
+        Tambah Produk
+    </h3>
 
-        <h3 class="font-bold text-green-700">
-            Tambah Produk
-        </h3>
+    <p class="text-sm text-green-600 mt-2">
+        Tambah produk baru
+    </p>
+</a>
 
-        <p class="text-sm text-green-600 mt-2">
-            Tambah produk baru
-        </p>
+    <!-- Kelola Kategori -->
+<a href="{{ route('kategori.index') }}"
+   class="bg-blue-50 border border-blue-200 p-5 rounded-2xl">
+    <h3 class="font-bold text-blue-700">
+        Kelola Kategori
+    </h3>
 
-    </a>
+    <p class="text-sm text-blue-600 mt-2">
+        Atur kategori produk
+    </p>
+</a>
 
-    <a href="#"
-       class="bg-blue-50 border border-blue-200 p-5 rounded-2xl">
+    <a href="{{ route('pesanan.index') }}"
+   class="bg-purple-50 border border-purple-200 p-5 rounded-2xl">
 
-        <h3 class="font-bold text-blue-700">
-            Kelola Kategori
-        </h3>
+    <h3 class="font-bold text-purple-700">
+        Kelola Pesanan
+    </h3>
 
-        <p class="text-sm text-blue-600 mt-2">
-            Atur kategori produk
-        </p>
+    <p class="text-sm text-purple-600 mt-2">
+        Lihat semua pesanan
+    </p>
 
-    </a>
-
-    <a href="#"
-       class="bg-purple-50 border border-purple-200 p-5 rounded-2xl">
-
-        <h3 class="font-bold text-purple-700">
-            Kelola Pesanan
-        </h3>
-
-        <p class="text-sm text-purple-600 mt-2">
-            Lihat semua pesanan
-        </p>
-
-    </a>
+</a>
 
     <a href="#"
        class="bg-orange-50 border border-orange-200 p-5 rounded-2xl">

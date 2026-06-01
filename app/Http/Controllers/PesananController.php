@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Pesanan;
 use App\Models\DetailPesanan;
@@ -23,80 +24,110 @@ class PesananController extends Controller
 
     // CHECKOUT
     public function checkout(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-if (!$request->has('selected_items')) {
-    return back()->with('error', 'Pilih produk dulu!');
-}
+    if (!$request->has('selected_items')) {
+        return back()->with('error', 'Pilih produk dulu!');
+    }
 
-$selected = $request->selected_items ?? [];
+    $selected = $request->selected_items ?? [];
 
-        $keranjang = Keranjang::with('produk')
-            ->where('id_user', $user->id_user)
-            ->whereIn('id_keranjang', $selected)
-            ->get();
-        if($keranjang->count() == 0){
-            return back();
+    $keranjang = Keranjang::with('produk')
+        ->where('id_user', $user->id_user)
+        ->whereIn('id_keranjang', $selected)
+        ->get();
+
+    if ($keranjang->count() == 0) {
+        return back()->with('error', 'Keranjang kosong!');
+    }
+
+    // VALIDASI STOK
+    foreach ($keranjang as $item) {
+
+        if ($item->produk->stok < $item->qty) {
+
+            return back()->with(
+                'error',
+                'Stok produk ' . $item->produk->nama_produk . ' tidak mencukupi.'
+            );
         }
+    }
 
-        $subtotal = 0;
+    $subtotal = 0;
 
-        foreach($keranjang as $item){
-            $subtotal += $item->produk->harga * $item->qty;
-        }
+    foreach ($keranjang as $item) {
 
-        $ongkir = (int) $request->ongkir;
-        $total = $subtotal + $ongkir;
+        $subtotal += $item->produk->harga * $item->qty;
+    }
 
-        // SIMPAN PESANAN
+    $ongkir = (int) $request->ongkir;
+    $total = $subtotal + $ongkir;
+
+    try {
+
+        DB::beginTransaction();
+
         $pesanan = Pesanan::create([
 
-    'id_user' => $user->id_user,
-    'tanggal_pesanan' => now(),
-    'total_harga' => $total,
-    'ongkir' => (int) $ongkir,
-    'status_pesanan' => $request->metode_pembayaran == 'COD'
-        ? 'diproses'
-        : 'pending',
-    'alamat_kirim' => $user->alamat,
-    'metode_pembayaran' => $request->metode_pembayaran,
-    'catatan' => $request->catatan,
-    'nama_penerima' => $user->nama,
-    'no_hp' => $user->no_hp
+            'id_user' => $user->id_user,
+            'tanggal_pesanan' => now(),
+            'total_harga' => $total,
+            'ongkir' => $ongkir,
+            'status_pesanan' => $request->metode_pembayaran == 'COD'
+                ? 'diproses'
+                : 'pending',
+            'alamat_kirim' => $user->alamat,
+            'metode_pembayaran' => $request->metode_pembayaran,
+            'catatan' => $request->catatan,
+            'nama_penerima' => $user->nama,
+            'no_hp' => $user->no_hp
 
-]);
+        ]);
 
-        // DETAIL PESANAN
-        foreach($keranjang as $item){
+        foreach ($keranjang as $item) {
 
             DetailPesanan::create([
+
                 'id_pesanan' => $pesanan->id_pesanan,
                 'id_produk' => $item->id_produk,
                 'qty' => $item->qty,
                 'harga' => $item->produk->harga,
                 'subtotal' => $item->produk->harga * $item->qty
+
             ]);
 
-            // KURANGI STOK
             $item->produk->decrement('stok', $item->qty);
         }
 
-        // HAPUS KERANJANG
-        Keranjang::whereIn('id_keranjang', $request->selected_items)
-    ->delete();
+        Keranjang::whereIn(
+            'id_keranjang',
+            $selected
+        )->delete();
 
-        // REDIRECT
-        if($request->metode_pembayaran == 'COD'){
-            return redirect()
-        ->route('pesanan.saya')
-        ->with('success', 'Pesanan berhasil dibuat!');
-        }
+        DB::commit();
+
+    } catch (\Exception $e) {
+
+        DB::rollBack();
+
+        return back()->with(
+            'error',
+            'Terjadi kesalahan saat checkout.'
+        );
+    }
+
+    if ($request->metode_pembayaran == 'COD') {
 
         return redirect()
-    ->route('pembayaran', $pesanan->id_pesanan)
-    ->with('success', 'Pesanan berhasil dibuat!');
+            ->route('pesanan.saya')
+            ->with('success', 'Pesanan berhasil dibuat!');
     }
+
+    return redirect()
+        ->route('pembayaran', $pesanan->id_pesanan)
+        ->with('success', 'Pesanan berhasil dibuat!');
+}
 
     // HALAMAN PEMBAYARAN
     public function pembayaran($id)
@@ -135,24 +166,48 @@ $selected = $request->selected_items ?? [];
 
     // BATALKAN PESANAN
     public function batalkan($id)
-    {
-        $pesanan = Pesanan::with('detailPesanan')
-            ->findOrFail($id);
+{
+    $pesanan = Pesanan::with('detailPesanan.produk')
+        ->findOrFail($id);
 
-        if($pesanan->status_pesanan == 'pending'){
-
-            $pesanan->update([
-                'status_pesanan' => 'dibatalkan'
-            ]);
-
-            foreach($pesanan->detailPesanan as $detail){
-
-                $detail->produk->increment('stok', $detail->qty);
-            }
-        }
-
+    if ($pesanan->status_pesanan != 'pending') {
         return back();
     }
+
+    try {
+
+        DB::beginTransaction();
+
+        $pesanan->update([
+            'status_pesanan' => 'dibatalkan'
+        ]);
+
+        foreach ($pesanan->detailPesanan as $detail) {
+
+            $detail->produk->increment(
+                'stok',
+                $detail->qty
+            );
+
+        }
+
+        DB::commit();
+
+    } catch (\Exception $e) {
+
+        DB::rollBack();
+
+        return back()->with(
+            'error',
+            'Gagal membatalkan pesanan.'
+        );
+    }
+
+    return back()->with(
+        'success',
+        'Pesanan berhasil dibatalkan.'
+    );
+}
 
     public function detail($id)
 {
