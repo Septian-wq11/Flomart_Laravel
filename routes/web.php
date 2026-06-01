@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
 use App\Http\Controllers\Admin\PesananController as AdminPesananController;
-
+use App\Http\Controllers\Admin\ReportController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -140,4 +140,85 @@ Route::prefix('admin')
             'pesanan/{id}/selesai',
             [AdminPesananController::class, 'selesai']
         )->name('pesanan.selesai');
+
+        Route::get(
+    '/report',
+    [ReportController::class, 'index']
+)->name('report.index');
+
+Route::get(
+    '/report/pdf',
+    [ReportController::class, 'pdf']
+)->name('report.pdf');
+
+Route::get(
+    '/report/excel',
+    [ReportController::class, 'excel']
+)->name('report.excel');
+
+Route::get(
+    '/report',
+    [ReportController::class,'index']
+)->name('report.index');
+
+Route::get(
+    '/report/pdf-all',
+    [ReportController::class,'pdfAll']
+)->name('report.pdf.all');
+
+Route::get(
+    '/report/pdf-pesanan',
+    [ReportController::class,'pdfPesanan']
+)->name('report.pdf.pesanan');
+
+Route::get(
+    '/report/pdf-produk',
+    [ReportController::class,'pdfProduk']
+)->name('report.pdf.produk');
+
+Route::get(
+    '/report/pdf-pendapatan',
+    [ReportController::class,'pdfPendapatan']
+)->name('report.pdf.pendapatan');
+
+Route::get(
+    '/report/excel-all',
+    [ReportController::class,'excelAll']
+)->name('report.excel.all');
+
+Route::get(
+    '/report/excel-pesanan',
+    [ReportController::class,'excelPesanan']
+)->name('report.excel.pesanan');
+
+Route::get(
+    '/report/excel-produk',
+    [ReportController::class,'excelProduk']
+)->name('report.excel.produk');
+
+Route::get(
+    '/report/excel-pendapatan',
+    [ReportController::class,'excelPendapatan']
+)->name('report.excel.pendapatan');
+
+Route::get(
+    '/report/excel-all',
+    [ReportController::class,'excelAll']
+)->name('report.excel.all');
+
+Route::get(
+    '/report/excel-pesanan',
+    [ReportController::class,'excelPesanan']
+)->name('report.excel.pesanan');
+
+Route::get(
+    '/report/excel-produk',
+    [ReportController::class,'excelProduk']
+)->name('report.excel.produk');
+
+Route::get(
+    '/report/excel-pendapatan',
+    [ReportController::class,'excelPendapatan']
+)->name('report.excel.pendapatan');
+
     });

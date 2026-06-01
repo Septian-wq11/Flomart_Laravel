@@ -157,7 +157,7 @@
 
 </a>
 
-    <a href="#"
+    <a href="{{ route('report.index') }}"
        class="bg-orange-50 border border-orange-200 p-5 rounded-2xl">
 
         <h3 class="font-bold text-orange-700">

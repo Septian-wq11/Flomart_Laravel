@@ -140,6 +140,17 @@ class="min-h-screen flex">
 
 </a>
 
+<a href="{{ route('report.index') }}"
+class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10">
+
+    <i class="fa-solid fa-file-lines"></i>
+
+    <span x-show="desktopSidebar">
+        Laporan
+    </span>
+
+</a>
+
         <!-- User -->
         <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-slate-700">
 
