@@ -93,27 +93,27 @@
 
     <div class="bg-white rounded-3xl p-6 shadow-sm border">
 
-        <div class="flex justify-between">
+    <div class="flex justify-between">
 
-            <div>
+        <div>
 
-                <p class="text-slate-500">
-                    Status
-                </p>
+            <p class="text-slate-500">
+                Total Pendapatan
+            </p>
 
-                <h2 class="text-2xl font-bold text-green-600 mt-2">
-                    Aktif
-                </h2>
-
-            </div>
-
-            <div class="text-green-500 text-3xl">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
+            <h2 class="text-2xl font-bold text-green-600 mt-2">
+                Rp {{ number_format($totalPendapatan,0,',','.') }}
+            </h2>
 
         </div>
 
+        <div class="text-green-500 text-3xl">
+            <i class="fa-solid fa-money-bill-wave"></i>
+        </div>
+
     </div>
+
+</div>
 
 </div>
 
@@ -169,6 +169,56 @@
         </p>
 
     </a>
+
+</div>
+
+<div class="grid lg:grid-cols-2 gap-6 mt-8">
+
+    <div class="bg-white p-6 rounded-3xl shadow-sm">
+    <h3 class="font-bold mb-4">
+        Pendapatan per Bulan
+    </h3>
+
+    <div class="h-72">
+        <canvas id="chartPenjualan"></canvas>
+    </div>
+</div>
+
+    <div class="bg-white p-6 rounded-3xl shadow-sm">
+
+    <h3 class="font-bold mb-4">
+        Status Pesanan
+    </h3>
+
+    <div class="h-72 flex justify-center">
+        <canvas id="chartStatus"></canvas>
+    </div>
+
+</div>
+
+</div>
+
+<div class="grid lg:grid-cols-2 gap-6 mt-6">
+
+    <div class="bg-white p-6 rounded-3xl shadow-sm">
+        <h3 class="font-bold mb-4">
+            Produk Terlaris
+        </h3>
+
+        <canvas id="chartProduk"></canvas>
+    </div>
+
+    <div class="bg-white p-6 rounded-3xl shadow-sm">
+
+    <h3 class="font-bold mb-4">
+        Metode Pembayaran
+    </h3>
+
+    <div class="h-72">
+        <canvas id="chartPembayaran"></canvas>
+    </div>
+
+</div>
 
 </div>
 
@@ -250,5 +300,84 @@
     </div>
 
 </div>
+
+<script>
+
+const namaBulan = @json($namaBulan);
+const dataPendapatan = @json($dataPendapatan);
+const statusPesanan = @json($statusPesanan);
+const produkTerlaris = @json($produkTerlaris);
+const metodePembayaran = @json($metodePembayaran);
+
+new Chart(
+    document.getElementById('chartPenjualan'),
+    {
+        type: 'line',
+        data: {
+            labels: namaBulan,
+            datasets: [{
+                label: 'Pendapatan',
+                data: dataPendapatan
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    }
+);
+
+new Chart(
+    document.getElementById('chartStatus'),
+    {
+        type: 'doughnut',
+        data: {
+            labels: statusPesanan.map(item => item.status_pesanan),
+            datasets: [{
+                data: statusPesanan.map(item => item.total)
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    }
+);
+
+new Chart(
+    document.getElementById('chartProduk'),
+    {
+        type: 'bar',
+        data: {
+            labels: produkTerlaris.map(item => item.nama_produk),
+            datasets: [{
+                label: 'Terjual',
+                data: produkTerlaris.map(item => item.total_terjual)
+            }]
+        },
+        options: {
+            indexAxis: 'y'
+        }
+    }
+);
+
+new Chart(
+    document.getElementById('chartPembayaran'),
+    {
+        type: 'doughnut',
+        data: {
+            labels: metodePembayaran.map(item => item.metode_pembayaran),
+            datasets: [{
+                data: metodePembayaran.map(item => item.total)
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    }
+);
+
+</script>
 
 @endsection
