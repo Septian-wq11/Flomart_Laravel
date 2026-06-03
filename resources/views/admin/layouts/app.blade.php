@@ -182,7 +182,8 @@ class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10">
                 @csrf
 
                 <button
-                    class="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg">
+                    class="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg"
+                    onclick="return confirm('Apakah Anda yakin ingin logout?')">
 
                     Logout
 
