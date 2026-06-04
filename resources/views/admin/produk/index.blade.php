@@ -21,7 +21,7 @@
             Manajemen seluruh produk FLOMART
         </p>
     </div>
-
+@if(Auth::user()->role == 'admin')
     <a href="{{ route('produk.create') }}"
        class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl shadow">
 
@@ -106,33 +106,43 @@
 
                     <td class="px-4 py-4">
 
-                        <div class="flex justify-center gap-2">
+                        @if(Auth::user()->role == 'admin')
 
-                            <a href="{{ route('produk.edit',$item->id_produk) }}"
-                               class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+<div class="flex justify-center gap-2">
 
-                                Edit
+    <a href="{{ route('produk.edit',$item->id_produk) }}"
+       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
 
-                            </a>
+        Edit
 
-                            <form
-                                action="{{ route('produk.destroy',$item->id_produk) }}"
-                                method="POST"
-                                onsubmit="return confirm('Hapus produk ini?')">
+    </a>
 
-                                @csrf
-                                @method('DELETE')
+    <form
+        action="{{ route('produk.destroy',$item->id_produk) }}"
+        method="POST"
+        onsubmit="return confirm('Hapus produk ini?')">
 
-                                <button
-                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+        @csrf
+        @method('DELETE')
 
-                                    Hapus
+        <button
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
 
-                                </button>
+            Hapus
 
-                            </form>
+        </button>
 
-                        </div>
+    </form>
+
+</div>
+
+@else
+
+<span class="text-slate-500">
+    Read Only
+</span>
+
+@endif
 
                     </td>
 

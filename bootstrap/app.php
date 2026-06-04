@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Auth\AuthenticationException;
 use App\Http\Middleware\SessionTimeout;
+use App\Http\Middleware\OwnerMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -16,8 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-        'session.timeout' => SessionTimeout::class,
-         'admin' => AdminMiddleware::class,
+    'session.timeout' => SessionTimeout::class,
+    'admin' => AdminMiddleware::class,
+    'owner' => OwnerMiddleware::class,
     ]);
 
     $middleware->web(append: [

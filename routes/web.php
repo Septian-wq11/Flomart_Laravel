@@ -17,6 +17,10 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
 use App\Http\Controllers\Admin\PesananController as AdminPesananController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Owner\OwnerDashboardController;
+use App\Http\Controllers\Owner\OwnerProdukController;
+use App\Http\Controllers\Owner\OwnerPesananController;
+use App\Http\Controllers\Owner\OwnerReportController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -221,4 +225,30 @@ Route::get(
     [ReportController::class,'excelPendapatan']
 )->name('report.excel.pendapatan');
 
+
+    });
+
+   Route::prefix('owner')
+    ->middleware(['auth', 'owner'])
+    ->group(function () {
+
+        Route::get(
+            '/dashboard',
+            [OwnerDashboardController::class, 'index']
+        )->name('owner.dashboard');
+
+        Route::get(
+            '/produk',
+            [OwnerProdukController::class, 'index']
+        )->name('owner.produk');
+
+        Route::get(
+            '/pesanan',
+            [OwnerPesananController::class, 'index']
+        )->name('owner.pesanan');
+
+        Route::get(
+            '/report',
+            [OwnerReportController::class, 'index']
+        )->name('owner.report');
     });

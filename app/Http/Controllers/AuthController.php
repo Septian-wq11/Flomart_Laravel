@@ -65,6 +65,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
+            
 
             // ADMIN
             if ($user->role == 'admin') {
