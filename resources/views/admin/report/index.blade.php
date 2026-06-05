@@ -14,6 +14,40 @@
         Export laporan transaksi, produk, dan pendapatan FLOMART
     </p>
 
+    <div class="grid md:grid-cols-3 gap-6 my-8">
+
+    <div class="bg-white rounded-3xl p-6 shadow-sm">
+        <p class="text-slate-500">
+            Total Produk
+        </p>
+
+        <h2 class="text-4xl font-bold mt-2">
+            {{ $totalProduk }}
+        </h2>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 shadow-sm">
+        <p class="text-slate-500">
+            Total Pesanan
+        </p>
+
+        <h2 class="text-4xl font-bold mt-2">
+            {{ $totalPesanan }}
+        </h2>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 shadow-sm">
+        <p class="text-slate-500">
+            Total Pendapatan
+        </p>
+
+        <h2 class="text-2xl font-bold text-green-600 mt-2">
+            Rp {{ number_format($totalPendapatan,0,',','.') }}
+        </h2>
+    </div>
+
+</div>
+
 </div>
 
 {{-- LAPORAN KESELURUHAN --}}

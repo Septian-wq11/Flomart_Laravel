@@ -21,6 +21,7 @@ use App\Http\Controllers\Owner\OwnerDashboardController;
 use App\Http\Controllers\Owner\OwnerProdukController;
 use App\Http\Controllers\Owner\OwnerPesananController;
 use App\Http\Controllers\Owner\OwnerReportController;
+use App\Http\Controllers\Owner\OwnerKategoriController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -243,12 +244,39 @@ Route::get(
         )->name('owner.produk');
 
         Route::get(
+    '/kategori',
+    [OwnerKategoriController::class, 'index']
+)->name('owner.kategori');
+
+        Route::get(
             '/pesanan',
             [OwnerPesananController::class, 'index']
         )->name('owner.pesanan');
+
+        Route::get('/pesanan/{id}',
+            [OwnerPesananController::class, 'show'])
+            ->name('owner.pesanan.show');
 
         Route::get(
             '/report',
             [OwnerReportController::class, 'index']
         )->name('owner.report');
+
+        Route::get('/report/pdf',
+            [OwnerReportController::class, 'pdf']
+        )->name('owner.report.pdf');
+
+        Route::get('/report/excel',
+            [OwnerReportController::class, 'excel']
+        )->name('owner.report.excel');
+
+        Route::get(
+    '/report/pdf-all',
+    [OwnerReportController::class,'pdfAll']
+)->name('owner.report.pdf.all');
+
+Route::get(
+    '/report/excel-all',
+    [OwnerReportController::class,'excelAll']
+)->name('owner.report.excel.all');
     });

@@ -18,9 +18,25 @@ use App\Exports\PendapatanExport;
 class ReportController extends Controller
 {
     public function index()
-    {
-        return view('admin.report.index');
-    }
+{
+    $totalProduk = Produk::count();
+
+    $totalPesanan = Pesanan::count();
+
+    $totalPendapatan = Pesanan::where(
+        'status_pesanan',
+        'selesai'
+    )->sum('total_harga');
+
+    return view(
+        'admin.report.index',
+        compact(
+            'totalProduk',
+            'totalPesanan',
+            'totalPendapatan'
+        )
+    );
+}
 
 public function excelAll()
 {

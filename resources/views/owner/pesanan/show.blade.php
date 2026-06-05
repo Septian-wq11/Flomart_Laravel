@@ -1,8 +1,18 @@
-@extends('admin.layouts.app')
+@extends('owner.layouts.app')
 
 @section('title', 'Detail Pesanan')
 
 @section('content')
+
+@if(session('success'))
+
+<div class="mb-4 p-4 rounded-xl bg-green-100 text-green-700">
+
+    {{ session('success') }}
+
+</div>
+
+@endif
 
 <div class="mb-6">
 
@@ -28,37 +38,105 @@
         <div class="space-y-4">
 
             <div>
-                <p class="text-slate-500 text-sm">Nama Penerima</p>
-                <p class="font-semibold">{{ $pesanan->nama_penerima }}</p>
+
+                <p class="text-slate-500 text-sm">
+                    Nama Penerima
+                </p>
+
+                <p class="font-semibold">
+                    {{ $pesanan->nama_penerima }}
+                </p>
+
             </div>
 
             <div>
-                <p class="text-slate-500 text-sm">No HP</p>
-                <p class="font-semibold">{{ $pesanan->no_hp }}</p>
+
+                <p class="text-slate-500 text-sm">
+                    No HP
+                </p>
+
+                <p class="font-semibold">
+                    {{ $pesanan->no_hp }}
+                </p>
+
             </div>
 
             <div>
-                <p class="text-slate-500 text-sm">Alamat Pengiriman</p>
-                <p class="font-semibold">{{ $pesanan->alamat_kirim }}</p>
+
+                <p class="text-slate-500 text-sm">
+                    Alamat Pengiriman
+                </p>
+
+                <p class="font-semibold">
+                    {{ $pesanan->alamat_kirim }}
+                </p>
+
             </div>
 
             <div>
-                <p class="text-slate-500 text-sm">Metode Pembayaran</p>
-                <p class="font-semibold">{{ $pesanan->metode_pembayaran }}</p>
+
+                <p class="text-slate-500 text-sm">
+                    Metode Pembayaran
+                </p>
+
+                <p class="font-semibold">
+                    {{ $pesanan->metode_pembayaran }}
+                </p>
+
             </div>
 
             <div>
-                <p class="text-slate-500 text-sm">Tanggal Pesanan</p>
+
+                <p class="text-slate-500 text-sm">
+                    Tanggal Pesanan
+                </p>
+
                 <p class="font-semibold">
                     {{ \Carbon\Carbon::parse($pesanan->tanggal_pesanan)->format('d M Y H:i') }}
                 </p>
+
             </div>
 
+            @if($pesanan->catatan)
+
             <div>
-                <p class="text-slate-500 text-sm">Status Pesanan</p>
-                <span class="inline-block px-3 py-1 rounded-full text-sm font-medium">
+
+                <p class="text-slate-500 text-sm">
+                    Catatan Pembeli
+                </p>
+
+                <p class="font-semibold">
+                    {{ $pesanan->catatan }}
+                </p>
+
+            </div>
+
+            @endif
+
+            <div>
+
+                <p class="text-slate-500 text-sm">
+                    Status Pesanan
+                </p>
+
+                <span class="inline-block px-3 py-1 rounded-full text-sm font-medium
+
+                    @if($pesanan->status_pesanan == 'pending')
+                        bg-red-100 text-red-600
+                    @elseif($pesanan->status_pesanan == 'menunggu')
+                        bg-yellow-100 text-yellow-600
+                    @elseif($pesanan->status_pesanan == 'diproses')
+                        bg-blue-100 text-blue-600
+                    @elseif($pesanan->status_pesanan == 'selesai')
+                        bg-green-100 text-green-600
+                    @elseif($pesanan->status_pesanan == 'dibatalkan')
+                        bg-gray-100 text-gray-600
+                    @endif">
+
                     {{ ucfirst($pesanan->status_pesanan) }}
+
                 </span>
+
             </div>
 
         </div>
@@ -72,46 +150,76 @@
             Produk Dipesan
         </h2>
 
-        <table class="w-full">
+        <div class="overflow-x-auto">
 
-            <thead>
-                <tr class="border-b">
-                    <th class="text-left py-3">Produk</th>
-                    <th class="text-left py-3">Qty</th>
-                    <th class="text-left py-3">Harga</th>
-                    <th class="text-left py-3">Subtotal</th>
-                </tr>
-            </thead>
+            <table class="w-full">
 
-            <tbody>
+                <thead>
 
-                @foreach($pesanan->detailPesanan as $detail)
+                    <tr class="border-b">
 
-                <tr class="border-b">
+                        <th class="text-left py-3">
+                            Produk
+                        </th>
 
-                    <td class="py-4">
-                        {{ $detail->produk->nama_produk }}
-                    </td>
+                        <th class="text-left py-3">
+                            Qty
+                        </th>
 
-                    <td>
-                        {{ $detail->qty }}
-                    </td>
+                        <th class="text-left py-3">
+                            Harga
+                        </th>
 
-                    <td>
-                        Rp {{ number_format($detail->harga,0,',','.') }}
-                    </td>
+                        <th class="text-left py-3">
+                            Subtotal
+                        </th>
 
-                    <td>
-                        Rp {{ number_format($detail->subtotal,0,',','.') }}
-                    </td>
+                    </tr>
 
-                </tr>
+                </thead>
 
-                @endforeach
+                <tbody>
 
-            </tbody>
+                    @foreach($pesanan->detailPesanan as $detail)
 
-        </table>
+                    <tr class="border-b">
+
+                        <td class="py-4">
+                            {{ $detail->produk->nama_produk }}
+                        </td>
+
+                        <td>
+                            {{ $detail->qty }}
+                        </td>
+
+                        <td>
+                            Rp {{ number_format($detail->harga,0,',','.') }}
+                        </td>
+
+                        <td>
+                            Rp {{ number_format($detail->subtotal,0,',','.') }}
+                        </td>
+
+                    </tr>
+
+                    @endforeach
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="mt-4 text-right">
+
+            <span class="font-semibold">
+
+                Total Item :
+                {{ $pesanan->detailPesanan->sum('qty') }}
+
+            </span>
+
+        </div>
 
     </div>
 
@@ -128,6 +236,7 @@
 
         <img
             src="{{ asset('uploads/bukti/' . $pesanan->bukti_pembayaran) }}"
+            alt="Bukti Pembayaran"
             class="w-96 rounded-xl border">
 
     @else
@@ -147,27 +256,36 @@
         Ringkasan Pembayaran
     </h2>
 
-    <div class="flex justify-between font-bold text-lg">
+    <div class="space-y-2">
 
-        <span>Total</span>
+        <div class="flex justify-between">
 
-        <span>
-            Rp {{ number_format($pesanan->total_harga,0,',','.') }}
-        </span>
+            <span>Ongkir</span>
+
+            <span>
+                Rp {{ number_format($pesanan->ongkir,0,',','.') }}
+            </span>
+
+        </div>
+
+        <div class="flex justify-between font-bold text-lg border-t pt-3">
+
+            <span>Total</span>
+
+            <span>
+                Rp {{ number_format($pesanan->total_harga,0,',','.') }}
+            </span>
+
+        </div>
 
     </div>
 
 </div>
 
-<div class="mt-6">
-
-    <a
-        href="{{ route('owner.pesanan') }}"
-        class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-xl">
-
-        Kembali
-
-    </a>
+    <a href="{{ route('owner.pesanan') }}"
+   class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-xl">
+    Kembali
+</a>
 
 </div>
 

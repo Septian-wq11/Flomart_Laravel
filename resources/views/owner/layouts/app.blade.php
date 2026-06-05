@@ -76,7 +76,7 @@ class="min-h-screen flex">
             x-show="desktopSidebar"
             class="text-slate-400 text-sm">
 
-            Admin Panel
+            Owner Panel
 
         </p>
 
@@ -93,13 +93,14 @@ class="min-h-screen flex">
 
         <!-- Menu -->
         <nav class="p-4 space-y-2">
-            <a href="{{ route('admin.dashboard') }}"
+
+    <a href="{{ route('owner.dashboard') }}"
    class="flex items-center gap-3 px-4 py-3 rounded-xl transition
-   {{ request()->routeIs('admin.dashboard')
-      ? 'bg-white/10'
+   {{ request()->routeIs('owner.dashboard')
+      ? 'bg-slate-700/40 shadow-lg'
       : 'hover:bg-white/10' }}">
 
-    <i class="fa-solid fa-house text-lg"></i>
+    <i class="fa-solid fa-house"></i>
 
     <span x-show="desktopSidebar">
         Dashboard
@@ -107,24 +108,24 @@ class="min-h-screen flex">
 
 </a>
 
-            <a href="{{ route('kategori.index') }}"
+    <a href="{{ route('owner.kategori') }}"
    class="flex items-center gap-3 px-4 py-3 rounded-xl transition
-   {{ request()->routeIs('kategori.*')
-      ? 'bg-white/10'
+   {{ request()->routeIs('owner.kategori*')
+      ? 'bg-slate-700/40 shadow-lg'
       : 'hover:bg-white/10' }}">
 
-                    <i class="fa-solid fa-layer-group"></i>
+    <i class="fa-solid fa-layer-group"></i>
 
-                    <span x-show="desktopSidebar">
-                        Kategori
-                    </span>
+    <span>
+        Kategori
+    </span>
 
-            </a>
+</a>
 
-            <a href="{{ route('produk.index') }}"
+    <a href="{{ route('owner.produk') }}"
    class="flex items-center gap-3 px-4 py-3 rounded-xl transition
-   {{ request()->routeIs('produk.*')
-      ? 'bg-white/10'
+   {{ request()->routeIs('owner.produk*')
+      ? 'bg-slate-700/40 shadow-lg'
       : 'hover:bg-white/10' }}">
 
     <i class="fa-solid fa-box"></i>
@@ -135,10 +136,10 @@ class="min-h-screen flex">
 
 </a>
 
-            <a href="{{ route('pesanan.index') }}"
+    <a href="{{ route('owner.pesanan') }}"
    class="flex items-center gap-3 px-4 py-3 rounded-xl transition
-   {{ request()->routeIs('pesanan.*')
-      ? 'bg-white/10'
+   {{ request()->routeIs('owner.pesanan*')
+      ? 'bg-slate-700/40 shadow-lg'
       : 'hover:bg-white/10' }}">
 
     <i class="fa-solid fa-cart-shopping"></i>
@@ -149,10 +150,10 @@ class="min-h-screen flex">
 
 </a>
 
-<a href="{{ route('report.index') }}"
+    <a href="{{ route('owner.report') }}"
    class="flex items-center gap-3 px-4 py-3 rounded-xl transition
-   {{ request()->routeIs('report.*')
-      ? 'bg-white/10'
+   {{ request()->routeIs('owner.report*')
+      ? 'bg-slate-700/40 shadow-lg'
       : 'hover:bg-white/10' }}">
 
     <i class="fa-solid fa-file-lines"></i>
@@ -162,6 +163,8 @@ class="min-h-screen flex">
     </span>
 
 </a>
+
+</nav>
 
         <!-- User -->
         <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-slate-700">
@@ -179,7 +182,7 @@ class="min-h-screen flex">
                     </h3>
 
                     <p x-show="desktopSidebar" class="text-sm text-slate-400">
-                        Administrator
+                        Owner FLOMART
                     </p>
 
                 </div>
@@ -243,7 +246,7 @@ class="min-h-screen flex">
                         </p>
 
                         <p class="text-sm text-slate-500">
-                            Admin FLOMART
+                            Owner FLOMART
                         </p>
 
                     </div>

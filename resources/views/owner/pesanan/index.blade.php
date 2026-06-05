@@ -1,13 +1,13 @@
-@extends('admin.layouts.app')
+@extends('owner.layouts.app')
 
-@section('title','Kelola Pesanan')
+@section('title','Lihat Pesanan')
 
 @section('content')
 
 <div class="mb-6">
 
     <h1 class="text-4xl font-bold text-slate-800">
-        Kelola Pesanan
+        Lihat Pesanan
     </h1>
 
     <p class="text-slate-500 mt-2">
@@ -16,6 +16,17 @@
 
 </div>
 
+@if(session('success'))
+
+<div class="mb-4 p-4 rounded-xl bg-green-100 text-green-700">
+
+    {{ session('success') }}
+
+</div>
+
+@endif
+
+{{-- FILTER STATUS --}}
 <div class="flex flex-wrap gap-3 mb-6">
 
     <a href="{{ route('owner.pesanan') }}"
@@ -58,6 +69,8 @@
 
 <div class="bg-white rounded-3xl shadow-sm overflow-hidden">
 
+<div class="bg-white rounded-3xl shadow-sm overflow-hidden">
+
     <div class="overflow-x-auto">
 
         <table class="w-full">
@@ -65,12 +78,31 @@
             <thead class="bg-slate-100">
 
                 <tr>
-                    <th class="px-5 py-4 text-left">ID</th>
-                    <th class="px-5 py-4 text-left">Pembeli</th>
-                    <th class="px-5 py-4 text-left">Metode</th>
-                    <th class="px-5 py-4 text-left">Total</th>
-                    <th class="px-5 py-4 text-left">Status</th>
-                    <th class="px-5 py-4 text-center">Aksi</th>
+
+                    <th class="px-5 py-4 text-left">
+                        ID
+                    </th>
+
+                    <th class="px-5 py-4 text-left">
+                        Pembeli
+                    </th>
+
+                    <th class="px-5 py-4 text-left">
+                        Metode
+                    </th>
+
+                    <th class="px-5 py-4 text-left">
+                        Total
+                    </th>
+
+                    <th class="px-5 py-4 text-left">
+                        Status
+                    </th>
+
+                    <th class="px-5 py-4 text-center">
+                        Aksi
+                    </th>
+
                 </tr>
 
             </thead>
@@ -100,41 +132,45 @@
                     <td class="px-5 py-4">
 
                         @if($item->status_pesanan == 'pending')
-                            <span class="px-3 py-1 rounded-full bg-red-100 text-red-600 text-sm">
+
+                            <span class="px-3 py-1 rounded-full bg-red-100 text-red-600 text-sm font-medium">
                                 Pending
                             </span>
 
                         @elseif($item->status_pesanan == 'menunggu')
-                            <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-600 text-sm">
+
+                            <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-600 text-sm font-medium">
                                 Menunggu
                             </span>
 
                         @elseif($item->status_pesanan == 'diproses')
-                            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm">
+
+                            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-medium">
                                 Diproses
                             </span>
 
                         @elseif($item->status_pesanan == 'selesai')
-                            <span class="px-3 py-1 rounded-full bg-green-100 text-green-600 text-sm">
+
+                            <span class="px-3 py-1 rounded-full bg-green-100 text-green-600 text-sm font-medium">
                                 Selesai
                             </span>
 
                         @elseif($item->status_pesanan == 'dibatalkan')
-                            <span class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-sm">
+
+                            <span class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-sm font-medium">
                                 Dibatalkan
                             </span>
+
                         @endif
 
                     </td>
 
                     <td class="px-5 py-4 text-center">
 
-                        <a href="{{ route('owner.pesanan.show', $item->id_pesanan) }}"
-                           class="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-
-                            Detail
-
-                        </a>
+                        <a href="{{ route('owner.pesanan.show',$item->id_pesanan) }}"
+   class="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+    Detail
+</a>
 
                     </td>
 

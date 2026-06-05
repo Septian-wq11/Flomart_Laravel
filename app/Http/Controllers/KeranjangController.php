@@ -11,7 +11,7 @@ class KeranjangController extends Controller
     // TAMBAH KERANJANG
     public function tambah(Request $request, $id)
 {
-    $qty = $request->qty;
+    $qty = $request->jumlah;
 
     // minimal qty 1
     if ($qty < 1) {
