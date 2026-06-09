@@ -18,18 +18,35 @@ class HomeController extends Controller
 
         // rekomendasi
         $rekomendasi = Produk::with('kategori')
-            ->orderByDesc('id_produk')
-            ->limit(4)
-            ->get();
+    ->withSum('detailPesanan', 'qty')
+    ->orderByDesc('detail_pesanan_sum_qty')
+    ->limit(4)
+    ->get();
 
         // produk
         $produk = Produk::with('kategori')
-            ->when($kategoriAktif, function ($query) use ($kategoriAktif) {
-                $query->where('id_kategori', $kategoriAktif);
-            })
-            ->where('stok', '>', 0)
-            ->latest('id_produk')
-            ->get();
+    ->leftJoin('detail_pesanan', 'produk.id_produk', '=', 'detail_pesanan.id_produk')
+    ->select(
+        'produk.*',
+        DB::raw('COALESCE(SUM(detail_pesanan.qty),0) as total_terjual')
+    )
+    ->when($kategoriAktif, function ($query) use ($kategoriAktif) {
+        $query->where('produk.id_kategori', $kategoriAktif);
+    })
+    ->where('produk.stok', '>', 0)
+    ->groupBy(
+        'produk.id_produk',
+        'produk.nama_produk',
+        'produk.id_kategori',
+        'produk.harga',
+        'produk.stok',
+        'produk.gambar',
+        'produk.deskripsi',
+        'produk.created_at',
+        'produk.updated_at'
+    )
+    ->latest('produk.id_produk')
+    ->get();
 
         return view('user.index', compact(
             'kategori',

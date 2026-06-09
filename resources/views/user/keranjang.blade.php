@@ -11,6 +11,12 @@
 
 <x-header />
 
+@if(session('error'))
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-5">
+    {{ session('error') }}
+</div>
+@endif
+
 <div class="max-w-7xl mx-auto px-10 pt-44 pb-20">
 
     <!-- HEADER -->

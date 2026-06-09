@@ -35,17 +35,25 @@ class PesananController extends Controller
 }
 
     public function show($id)
-    {
-        $pesanan = Pesanan::with(
-            'detailPesanan.produk',
-            'user'
-        )->findOrFail($id);
+{
+    $pesanan = Pesanan::with(
+        'detailPesanan.produk',
+        'user'
+    )->findOrFail($id);
 
-        return view(
-            'admin.pesanan.show',
-            compact('pesanan')
-        );
-    }
+    $jenisProduk = $pesanan->detailPesanan->count();
+
+    $totalItem = $pesanan->detailPesanan->sum('qty');
+
+    return view(
+        'admin.pesanan.show',
+        compact(
+            'pesanan',
+            'jenisProduk',
+            'totalItem'
+        )
+    );
+}
 
     public function verifikasi($id)
     {
