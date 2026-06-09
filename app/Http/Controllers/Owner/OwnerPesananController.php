@@ -28,14 +28,22 @@ class OwnerPesananController extends Controller
 }
 
     public function show($id)
-    {
-        $pesanan = Pesanan::with([
-            'detailPesanan.produk'
-        ])->findOrFail($id);
+{
+    $pesanan = Pesanan::with([
+        'detailPesanan.produk'
+    ])->findOrFail($id);
 
-        return view(
-            'owner.pesanan.show',
-            compact('pesanan')
-        );
-    }
+    $jenisProduk = $pesanan->detailPesanan->count();
+
+    $totalItem = $pesanan->detailPesanan->sum('qty');
+
+    return view(
+        'owner.pesanan.show',
+        compact(
+            'pesanan',
+            'jenisProduk',
+            'totalItem'
+        )
+    );
+}
 }

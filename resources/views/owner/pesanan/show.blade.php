@@ -210,16 +210,27 @@
 
         </div>
 
-        <div class="mt-4 text-right">
+        <div class="mt-4 flex justify-end">
 
-            <span class="font-semibold">
+    <div class="text-right">
 
-                Total Item :
-                {{ $pesanan->detailPesanan->sum('qty') }}
-
+        <p>
+            Jenis Produk :
+            <span class="font-bold">
+                {{ $pesanan->detailPesanan->count() }}
             </span>
+        </p>
 
-        </div>
+        <p>
+            Total Item :
+            <span class="font-bold">
+                {{ $pesanan->detailPesanan->sum('qty') }}
+            </span>
+        </p>
+
+    </div>
+
+</div>
 
     </div>
 
