@@ -11,7 +11,7 @@ class KeranjangController extends Controller
     // TAMBAH KERANJANG
     public function tambah(Request $request, $id)
 {
-    $qty = $request->jumlah;
+    $qty = (int) $request->input('qty', $request->input('jumlah', 1));
 
     // minimal qty 1
     if ($qty < 1) {
@@ -107,11 +107,19 @@ public function updateQty(Request $request)
     // TAMBAH
     if ($aksi == 'tambah') {
 
-        if ($qty < $stok) {
+    if ($qty < $stok) {
 
-            $qty++;
-        }
+        $qty++;
+
+    } else {
+
+        return back()->with(
+            'error',
+            'Maaf, stok '.$keranjang->produk->nama_produk.
+            ' hanya tersedia '.$stok.' item.'
+        );
     }
+}
 
     // KURANG
     else {

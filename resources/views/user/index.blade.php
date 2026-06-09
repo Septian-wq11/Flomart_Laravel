@@ -119,6 +119,13 @@
 
 </p>
 
+<!-- TERJUAL -->
+<p class="text-gray-500 text-sm mt-1">
+
+    Terjual {{ $item->detail_pesanan_sum_qty ?? 0 }}
+
+</p>
+
 <!-- BUTTON KERANJANG -->
 <div class="flex justify-end mt-4">
 
@@ -236,6 +243,10 @@
                         Rp {{ number_format($item->harga, 0, ',', '.') }}
 
                     </p>
+
+                    <p class="text-gray-500 text-sm mt-1">
+    Terjual {{ $item->total_terjual ?? 0 }}
+</p>
 
                     <!-- BUTTON -->
 <div class="flex justify-end mt-4">

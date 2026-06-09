@@ -37,7 +37,59 @@
 
         <p><b>Metode:</b> {{ $pesanan->metode_pembayaran }}</p>
 
-        <hr class="my-4">
+@if($pesanan->metode_pembayaran == 'Transfer')
+
+<div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+
+    <h3 class="font-semibold text-lg mb-3">
+        Informasi Pembayaran
+    </h3>
+
+    <div class="space-y-2">
+
+        <p>
+            <b>Bank:</b> BCA
+        </p>
+
+        <div class="flex items-center gap-3">
+
+            <span>
+                <b>No Rekening:</b>
+            </span>
+
+            <span id="rekening">
+                1234567890
+            </span>
+
+            <button
+                type="button"
+                onclick="copyRekening()"
+                class="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm">
+
+                Salin
+            </button>
+
+        </div>
+
+        <p>
+            <b>Atas Nama:</b>
+            FLOMART INDONESIA
+        </p>
+
+        <p
+            id="notifCopy"
+            class="hidden text-green-600 font-semibold">
+
+            ✓ Nomor rekening berhasil disalin
+        </p>
+
+    </div>
+
+</div>
+
+@endif
+
+<hr class="my-4">
 
         <h3 class="font-semibold mb-3">
 
@@ -152,6 +204,29 @@
 </div>
 
 <x-footer />
+
+<script>
+
+function copyRekening()
+{
+    let rekening =
+        document.getElementById('rekening').innerText;
+
+    navigator.clipboard.writeText(rekening);
+
+    let notif =
+        document.getElementById('notifCopy');
+
+    notif.classList.remove('hidden');
+
+    setTimeout(() => {
+
+        notif.classList.add('hidden');
+
+    }, 2000);
+}
+
+</script>
 
 </body>
 </html>

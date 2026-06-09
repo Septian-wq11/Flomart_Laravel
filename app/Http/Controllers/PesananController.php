@@ -47,11 +47,12 @@ class PesananController extends Controller
 
         if ($item->produk->stok < $item->qty) {
 
-            return back()->with(
-                'error',
-                'Stok produk ' . $item->produk->nama_produk . ' tidak mencukupi.'
-            );
-        }
+    return back()->with(
+        'error',
+        'Maaf, stok '.$item->produk->nama_produk.
+        ' hanya tersisa '.$item->produk->stok.' pcs.'
+    );
+}
     }
 
     $subtotal = 0;
